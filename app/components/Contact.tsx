@@ -36,18 +36,18 @@ export default function Contact() {
   };
 
   return (
-    <section className="mb-16 relative z-10 font-mono">
-      <h2 className="text-3xl font-bold mb-8 text-center text-green-400">Get in Touch</h2>
+    <section className="mb-16 relative z-10 font-gaming">
+      <h2 className="text-3xl font-bold mb-8 text-center text-blue-400">Send a Message</h2>
       <motion.form
         onSubmit={handleSubmit}
-        className="max-w-lg mx-auto bg-black bg-opacity-70 shadow-lg rounded-lg p-8 border border-green-500"
+        className="max-w-lg mx-auto bg-gray-900 bg-opacity-70 shadow-lg rounded-lg p-8 border border-blue-500"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
         {['name', 'email', 'message'].map((field) => (
           <div key={field} className="mb-6">
-            <label htmlFor={field} className="block text-sm font-medium text-green-400 mb-2 capitalize">
+            <label htmlFor={field} className="block text-sm font-medium text-blue-400 mb-2 capitalize">
               {field}
             </label>
             {field === 'message' ? (
@@ -55,7 +55,7 @@ export default function Contact() {
                 id={field}
                 value={formData[field as keyof typeof formData]}
                 onChange={handleChange}
-                className="w-full px-3 py-2 bg-black bg-opacity-50 border border-green-500 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400 transition text-green-300"
+                className="w-full px-3 py-2 bg-gray-800 bg-opacity-50 border border-blue-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 transition text-blue-300"
                 rows={4}
                 required
               />
@@ -65,7 +65,7 @@ export default function Contact() {
                 id={field}
                 value={formData[field as keyof typeof formData]}
                 onChange={handleChange}
-                className="w-full px-3 py-2 bg-black bg-opacity-50 border border-green-500 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400 transition text-green-300"
+                className="w-full px-3 py-2 bg-gray-800 bg-opacity-50 border border-blue-500 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 transition text-blue-300"
                 required
               />
             )}
@@ -73,14 +73,14 @@ export default function Contact() {
         ))}
         <motion.button
           type="submit"
-          className="w-full bg-green-700 text-green-100 px-4 py-2 rounded-md hover:bg-green-600 transition flex items-center justify-center"
-          whileHover={{ scale: 1.05, boxShadow: '0 0 8px rgb(0, 255, 0)' }}
+          className="w-full bg-blue-700 text-blue-100 px-4 py-2 rounded-md hover:bg-blue-600 transition flex items-center justify-center"
+          whileHover={{ scale: 1.05, boxShadow: '0 0 8px rgb(0, 100, 255)' }}
           whileTap={{ scale: 0.95 }}
           disabled={status === 'sending'}
         >
           {status === 'sending' ? (
             <motion.div
-              className="w-6 h-6 border-t-2 border-green-200 rounded-full"
+              className="w-6 h-6 border-t-2 border-blue-200 rounded-full"
               animate={{ rotate: 360 }}
               transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
             />
@@ -95,7 +95,7 @@ export default function Contact() {
           {status && (
             <motion.div
               className={`mt-4 p-3 rounded-md ${
-                status === 'success' ? 'bg-green-900 bg-opacity-50 text-green-300' : 'bg-red-900 bg-opacity-50 text-red-300'
+                status === 'success' ? 'bg-blue-900 bg-opacity-50 text-blue-300' : 'bg-red-900 bg-opacity-50 text-red-300'
               }`}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
