@@ -2,6 +2,25 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaCode, FaServer, FaDatabase, FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { IconType } from 'react-icons';
+
+// Define the interface for the experience object
+interface Experience {
+  company: string;
+  position: string;
+  duration: string;
+  level: string;
+  description: string[];
+  technologies: string[];
+  icon: IconType;  // This is the type for react-icons
+}
+// Define the props interface for the component
+interface ExperienceCardProps {
+  exp: Experience;
+  index: number;
+  isExpanded: boolean;
+  toggleExpand: (index: number) => void;
+}
 
 const experiences = [
   {
@@ -48,8 +67,13 @@ const experiences = [
   }
 ]
 
-const PixelBox = ({ children, isExpanded }: { children: React.ReactNode; isExpanded: boolean }) => (
-  <div className="relative">
+interface PixelBoxProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode;
+  isExpanded: boolean;
+}
+
+const PixelBox: React.FC<PixelBoxProps> = ({ children, isExpanded, className, ...props }) => (
+  <div className={`relative ${className || ''}`} {...props}>
     <div className={`absolute inset-0 bg-blue-500 blur transition-all duration-300 ${isExpanded ? 'opacity-50' : 'opacity-20'}`}></div>
     <div className={`relative bg-gray-900 border-2 transition-all duration-300 ${isExpanded ? 'border-purple-400' : 'border-blue-400'} p-4 shadow-lg`}>
       {children}
@@ -58,17 +82,19 @@ const PixelBox = ({ children, isExpanded }: { children: React.ReactNode; isExpan
 );
 
 
-const ExperienceCard = ({ exp, index, isExpanded, toggleExpand }) => {
+const ExperienceCard: React.FC<ExperienceCardProps> = ({ exp, index, isExpanded, toggleExpand }) => {
+  const IconComponent = exp.icon;
+
   return (
     <PixelBox isExpanded={isExpanded}>
       <motion.div
         className="cursor-pointer"
-        onClick={toggleExpand}
+        onClick={() => toggleExpand(index)}
         whileHover={{ scale: 1.02 }}
       >
         <div className="flex items-center justify-between">
           <h3 className="text-2xl font-semibold mb-1 text-blue-400 pixel-text">{exp.company}</h3>
-          <exp.icon className="text-purple-500 text-2xl" />
+          <IconComponent className="text-purple-500 text-2xl" />
         </div>
         <p className="text-sm text-blue-300 mb-2 pixel-text">{exp.duration}</p>
         <p className="text-xl mb-3 text-purple-500 pixel-text">{exp.position}</p>
