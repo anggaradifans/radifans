@@ -29,9 +29,10 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build --debug
+        run: npm run build -- --debug
         env:
           NEXT_PUBLIC_BASE_PATH: ${{ secrets.NEXT_PUBLIC_BASE_PATH }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
 
       - name: Add .nojekyll file
         run: touch out/.nojekyll
