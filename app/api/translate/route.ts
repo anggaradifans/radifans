@@ -1,6 +1,3 @@
-import { NextRequest, NextResponse } from 'next/server';
-import formidable from 'formidable';
-import fs from 'fs/promises';
 import sharp from 'sharp';
 import { createScheduler, createWorker } from 'tesseract.js';
 import { translate } from '@vitalets/google-translate-api';
@@ -12,34 +9,19 @@ interface TranslationResult {
   processed_image: string;
 }
 
-interface FormidableFile {
-  filepath: string;
-  originalFilename: string;
-  newFilename: string;
-  mimetype: string;
-  size: number;
-}
-
-export async function POST(request: NextRequest) {
-    const form = formidable();
-  
+export async function POST(request: Request) {
   try {
-    const [fields, files] = await new Promise<[formidable.Fields, formidable.Files]>((resolve, reject) => {
-        form.parse(request as any, (err, fields, files) => {
-          if (err) reject(err);
-          resolve([fields, files]);
-        });
-      });
-  
-    const imageFile = files.image as unknown as FormidableFile;
-    if (!imageFile || Array.isArray(imageFile)) {
-    return NextResponse.json({ error: 'Invalid file upload' }, { status: 400 });
+    const formData = await request.formData();
+    const file = formData.get('image') as File | null;
+
+    if (!file) {
+      return Response.json({ error: 'No file uploaded' }, { status: 400 });
     }
 
-    const imagePath = imageFile.filepath;
+    const buffer = Buffer.from(await file.arrayBuffer());
 
     // Image processing
-    const processedImageBuffer = await sharp(imagePath)
+    const processedImageBuffer = await sharp(buffer)
       .greyscale()
       .modulate({
         brightness: 1,
@@ -62,18 +44,14 @@ export async function POST(request: NextRequest) {
     // Convert processed image to base64
     const base64Image = processedImageBuffer.toString('base64');
 
-    const result: TranslationResult = { 
-        translations: [{ original: text, translated: translatedText }],
-        processed_image: base64Image
-      };
+    const result: TranslationResult = {
+      translations: [{ original: text, translated: translatedText }],
+      processed_image: `data:image/jpeg;base64,${base64Image}`
+    };
 
-    // Clean up: delete the temporary file
-    await fs.unlink(imagePath);
-
-    return NextResponse.json(result)
-
+    return Response.json(result);
   } catch (error) {
     console.error('Error processing image:', error);
-    return NextResponse.json({ error: 'Image processing failed' }, { status: 500 });
+    return Response.json({ error: 'Image processing failed' }, { status: 500 });
   }
 }

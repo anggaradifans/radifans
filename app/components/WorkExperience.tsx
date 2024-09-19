@@ -24,7 +24,7 @@ interface ExperienceCardProps {
 
 const experiences = [
   {
-    company: "Tilaka.id",
+    company: "Tilaka Nusa Teknologi",
     position: "Software Engineer",
     duration: "July 2022 - Present",
     level: "Level 3",
@@ -35,11 +35,11 @@ const experiences = [
       "Collaborated with cross-functional teams to deliver high-quality software, meeting client requirements and deadlines.",
       "Debugged and troubleshot complex issues to ensure code quality and system stability."
     ],
-    technologies: ['Node', 'Spring', 'Next', 'Nuxt'],
+    technologies: ['Javascript', 'Typescript', 'Node.js', 'Java', 'React/Next.Js', 'Vue/Nuxt.js', 'Spring Boot', 'Primefaces', 'Dropwizard', 'MySQL', 'MongoDB', 'Gitlab'],
     icon: FaCode
   },
   {
-    company: "AMS-Global.ai",
+    company: "Arogya Mitra Sejati",
     position: "Software Engineer",
     duration: "April 2020 - June 2022",
     level: "Level 2",
@@ -48,7 +48,7 @@ const experiences = [
       "Architected efficient and secure RESTful APIs and GraphQL schemas using Nest.js and TypeScript.",
       "Optimized application performance through code refactoring and implementation of best practices."
     ],
-    technologies: ['Vue', 'Nuxt', 'Node'],
+    technologies: ['Vue/Nuxt.js', 'Node.js', 'Javascript', 'Typescript', 'Nest.js', 'GraphQL', 'MySQL', 'Gitlab'],
     icon: FaServer
   },
   {
@@ -62,7 +62,7 @@ const experiences = [
       "Utilized MongoDB for efficient data storage and retrieval.",
       "Collaborated with frontend developers to ensure seamless integration of backend services."
     ],
-    technologies: ['Node'],
+    technologies: ['Node.js', 'Javascript', 'MongoDB', 'Gitlab'],
     icon: FaDatabase
   }
 ]
@@ -134,7 +134,6 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ exp, index, isExpanded,
         </AnimatePresence>
         <motion.div
           className="mt-2 text-blue-400 font-semibold flex items-center justify-center"
-          animate={{ rotateX: isExpanded ? 180 : 0 }}
         >
           {isExpanded ? <FaChevronUp /> : <FaChevronDown />}
         </motion.div>

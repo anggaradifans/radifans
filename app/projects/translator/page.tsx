@@ -42,7 +42,7 @@ export default function MangaTranslator() {
       });
 
       setTranslations(response.data.translations);
-      setProcessedImage(`data:image/jpeg;base64,${response.data.processed_image}`);
+      setProcessedImage(`${response.data.processed_image}`);
     } catch (error) {
       console.error('Error translating manga:', error);
       alert('Failed to translate. Please try again.');

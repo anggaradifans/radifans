@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
+    experimental: {
+      serverComponentsExternalPackages: ['tesseract.js'],
+    },
     webpack: (config) => {
       config.externals.push({
         'sharp': 'commonjs sharp',
