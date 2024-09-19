@@ -1,5 +1,8 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
+import NavBar from './components/Navbar'  // Adjust the import path as needed
+import GameBackground from './components/backgrounds/GameBackground'
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,7 +18,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <NavBar />
+        <GameBackground />
+        <main className="container mx-auto px-4 py-8">
+          {children}
+        </main>
+      </body>
     </html>
   )
 }
