@@ -36,7 +36,7 @@ export default function Contact() {
   };
 
   return (
-    <section className="mb-16 relative z-10 font-gaming">
+    <section className="mb-16 relative z-10">
       <h2 className="text-3xl font-bold mb-8 text-center text-blue-400">Send a Message</h2>
       <motion.form
         onSubmit={handleSubmit}

@@ -93,11 +93,11 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ exp, index, isExpanded,
         whileHover={{ scale: 1.02 }}
       >
         <div className="flex items-center justify-between">
-          <h3 className="text-2xl font-semibold mb-1 text-blue-400 pixel-text">{exp.company}</h3>
+          <h3 className="text-2xl font-semibold mb-1 text-blue-400">{exp.company}</h3>
           <IconComponent className="text-purple-500 text-2xl" />
         </div>
-        <p className="text-sm text-blue-300 mb-2 pixel-text">{exp.duration}</p>
-        <p className="text-xl mb-3 text-purple-500 pixel-text">{exp.position}</p>
+        <p className="text-sm text-blue-300 mb-2">{exp.duration}</p>
+        <p className="text-xl mb-3 text-purple-500">{exp.position}</p>
         <div className="flex flex-wrap gap-2">
           {exp.technologies.map((tech, idx) => (
             <motion.span 
@@ -121,7 +121,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ exp, index, isExpanded,
               {exp.description.map((item, idx) => (
                 <motion.li 
                   key={idx} 
-                  className="mb-1 text-sm pixel-text"
+                  className="mb-1 text-sm"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.1 }}
@@ -151,8 +151,8 @@ export default function WorkExperienceTree() {
   };
 
   return (
-    <section className="mb-16 relative z-10 font-gaming">
-      <h2 className="text-3xl font-bold mb-12 text-center text-blue-400 pixel-text">Career Quest Log</h2>
+    <section className="mb-16 relative z-10">
+      <h2 className="text-3xl font-bold mb-12 text-center text-blue-400">Career Quest Log</h2>
       <div className="relative max-w-4xl mx-auto pl-4">
         <div className="absolute left-4 top-0 bottom-0 w-1 bg-blue-400 pixel-border"></div>
         {experiences.map((exp, index) => (
