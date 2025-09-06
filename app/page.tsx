@@ -1,4 +1,5 @@
 // app/page.tsx
+import AnimatedPixelDesk from './components/AnimatedPixelDesk'
 import Overview from './components/Overview'
 import WorkExperience from './components/WorkExperience'
 import Skills from './components/Skills'
@@ -8,6 +9,9 @@ export default function Home() {
   return (
     <div className="min-h-screen relative">
       <main className="container mx-auto px-4 py-8 relative z-10">
+        <section id="animated-desk" className="mb-12">
+          <AnimatedPixelDesk />
+        </section>
         <section id="overview">
           <Overview />
         </section>
