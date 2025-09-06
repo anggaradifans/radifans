@@ -2,7 +2,9 @@
 
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import axios from 'axios';
+import { ArrowLeft, Home } from 'lucide-react';
 
 interface Translation {
   original: string;
@@ -52,9 +54,33 @@ export default function MangaTranslator() {
   };
 
   return (
-    <div className="min-h-fit flex items-center justify-center">
-      <div className="container max-w-xl mx-auto p-6 bg-gray-900 bg-opacity-70 shadow-lg rounded-lg p-6 mb-8 border border-blue-500 text-blue-300">
-        <h1 className="text-xl font-bold mb-6 text-center">Manga Translator</h1>
+    <div className="min-h-screen bg-gray-900">
+      {/* Navigation Header */}
+      <nav className="p-4 bg-gray-900 bg-opacity-90 backdrop-blur-sm border-b border-blue-500">
+        <div className="container mx-auto flex items-center justify-between">
+          <Link 
+            href="/" 
+            className="flex items-center space-x-2 text-blue-300 hover:text-blue-400 transition-colors"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span>Back to Portfolio</span>
+          </Link>
+          <Link 
+            href="/" 
+            className="flex items-center space-x-2 text-blue-300 hover:text-blue-400 transition-colors"
+          >
+            <Home className="w-5 h-5" />
+            <span>Home</span>
+          </Link>
+        </div>
+      </nav>
+
+      <div className="container mx-auto p-6 flex items-center justify-center min-h-[calc(100vh-80px)]">
+        <div className="max-w-xl w-full bg-gray-900 bg-opacity-70 shadow-lg rounded-lg p-6 border border-blue-500 text-blue-300">
+        <div className="text-center mb-6">
+          <h1 className="text-2xl md:text-3xl font-bold text-blue-400 mb-2">Manga Translator</h1>
+          <p className="text-blue-300 text-sm">Upload manga images for automatic text detection and translation</p>
+        </div>
         <form onSubmit={handleSubmit} className="mb-6 flex flex-col items-center">
           <input 
             type="file" 
@@ -89,6 +115,7 @@ export default function MangaTranslator() {
             ))}
           </div>
         )}
+        </div>
       </div>
     </div>
   );

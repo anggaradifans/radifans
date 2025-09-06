@@ -1,4 +1,4 @@
-// app/api/send-email/route.ts
+import axios from 'axios';
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
@@ -7,17 +7,72 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(request: Request) {
   const { name, email, message } = await request.json()
 
+  const htmlContent = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>New Contact Form Submission</title>
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          line-height: 1.6;
+          color: #333;
+          max-width: 600px;
+          margin: 0 auto;
+          padding: 20px;
+        }
+        h1 {
+          color: #2c5282;
+          border-bottom: 2px solid #2c5282;
+          padding-bottom: 10px;
+        }
+        .info {
+          background-color: #ebf8ff;
+          border-left: 4px solid #4299e1;
+          padding: 15px;
+          margin-bottom: 20px;
+        }
+        .message {
+          background-color: #e6fffa;
+          border-left: 4px solid #38b2ac;
+          padding: 15px;
+        }
+        strong {
+          color: #2b6cb0;
+        }
+      </style>
+    </head>
+    <body>
+      <h1>New Contact Form Submission</h1>
+      <div class="info">
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+      </div>
+      <div class="message">
+        <p><strong>Message:</strong></p>
+        <p>${message.replace(/\n/g, '<br>')}</p>
+      </div>
+    </body>
+    </html>
+  `;
+
   try {
     const data = await resend.emails.send({
       from: 'onboarding@resend.dev', // You can use this address while in development
       to: 'anggaradifans@gmail.com', // Your email address
       subject: `New message from ${name}`,
-      text: `
-        Name: ${name}
-        Email: ${email}
-        Message: ${message}
-      `,
+      html: htmlContent,
     });
+
+    const acceptLanguage = request.headers.get('accept-language') || 'en-US';
+
+    await axios.get('http://localhost:10080/dummy/testing', {
+      headers: {
+        'Accept-Language': acceptLanguage
+      },
+    })
 
     return NextResponse.json({ message: 'Email sent successfully', data })
   } catch (error) {
