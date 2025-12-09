@@ -150,7 +150,7 @@ export default function WorkExperienceTree() {
   };
 
   return (
-    <section className="mb-16 relative z-10">
+    <section className="mb-16 relative">
       <h2 className="text-3xl font-bold mb-12 text-center text-blue-400">Career Quest Log</h2>
       <div className="relative max-w-4xl mx-auto pl-4">
         <div className="absolute left-4 top-0 bottom-0 w-1 bg-blue-400 pixel-border"></div>
@@ -163,7 +163,7 @@ export default function WorkExperienceTree() {
             transition={{ duration: 0.5, delay: index * 0.2 }}
           >
             <motion.div 
-              className="absolute -left-4 top-0 w-8 h-8 bg-blue-400 pixel-box flex items-center justify-center text-gray-900 font-bold z-10"
+              className="absolute -left-4 top-0 w-8 h-8 bg-blue-400 pixel-box flex items-center justify-center text-gray-900 font-bold"
               whileHover={{ scale: 1.1, boxShadow: '0 0 8px rgba(66, 153, 225, 0.6)' }}
             >
               {exp.level.split(' ')[1]}

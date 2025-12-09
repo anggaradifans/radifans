@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Pixel Desk Placeholder</title>
+    <style>
+        body { font-family: monospace; padding: 20px; background: #1a1a2e; color: #fff; }
+        canvas { border: 2px solid #0f3460; image-rendering: pixelated; }
+        button { background: #0f3460; color: white; border: none; padding: 10px 20px; margin: 10px; cursor: pointer; }
+        button:hover { background: #16213e; }
+        .controls { margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <h1>Pixel Desk Art Generator</h1>
+    <p>This generates a placeholder pixel desk image for the Three.js component.</p>
+    
+    <canvas id="canvas" width="512" height="288"></canvas>
+    
+    <div class="controls">
+        <button onclick="generatePixelDesk()">Generate Pixel Desk</button>
+        <button onclick="downloadImage()">Download as PNG</button>
+        <p>Right-click the canvas and "Save image as..." to save as <strong>pixel-desk-art.png</strong></p>
+        <p>Place the saved image in your <strong>/public/</strong> folder</p>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        ctx.imageSmoothingEnabled = false;
+
+        function drawPixel(x, y, color, size = 1) {
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y, size, size);
+        }
+
+        function generatePixelDesk() {
+            // Clear canvas
+            ctx.fillStyle = '#0d1117';
+            ctx.fillRect(0, 0, 512, 288);
+
+            // Draw desk surface (brown/wood)
+            ctx.fillStyle = '#8B4513';
+            ctx.fillRect(0, 200, 512, 88);
+
+            // Draw desk edge
+            ctx.fillStyle = '#654321';
+            ctx.fillRect(0, 190, 512, 10);
+
+            // Draw wall (dark blue)
+            ctx.fillStyle = '#1a1a2e';
+            ctx.fillRect(0, 0, 512, 190);
+
+            // Draw main monitor (black screen)
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(150, 85, 90, 105);
+            
+            // Monitor stand
+            ctx.fillStyle = '#333333';
+            ctx.fillRect(180, 190, 30, 15);
+            ctx.fillRect(185, 205, 20, 10);
+
+            // Draw monitor glow/content (blue)
+            ctx.fillStyle = '#0066cc';
+            ctx.fillRect(155, 90, 80, 95);
+            
+            // Monitor scanlines
+            for(let i = 0; i < 95; i += 4) {
+                ctx.fillStyle = '#004499';
+                ctx.fillRect(155, 90 + i, 80, 1);
+            }
+
+            // Draw lamp (positioned at UV 0.45, 0.12 = x:230, y:35)
+            ctx.fillStyle = '#FFD700';
+            ctx.fillRect(220, 25, 20, 15);
+            
+            // Lamp base
+            ctx.fillStyle = '#333333';
+            ctx.fillRect(225, 40, 10, 150);
+            ctx.fillRect(220, 190, 20, 15);
+
+            // Lamp light cone (yellowish)
+            const gradient = ctx.createRadialGradient(230, 40, 10, 230, 40, 100);
+            gradient.addColorStop(0, 'rgba(255, 215, 0, 0.3)');
+            gradient.addColorStop(1, 'rgba(255, 215, 0, 0.0)');
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(230, 40, 100, 0, 2 * Math.PI);
+            ctx.fill();
+
+            // Draw keyboard
+            ctx.fillStyle = '#222222';
+            ctx.fillRect(100, 220, 120, 40);
+            
+            // Keyboard keys
+            ctx.fillStyle = '#444444';
+            for(let row = 0; row < 4; row++) {
+                for(let col = 0; col < 12; col++) {
+                    ctx.fillRect(105 + col * 9, 225 + row * 8, 7, 6);
+                }
+            }
+
+            // Draw mouse
+            ctx.fillStyle = '#333333';
+            ctx.fillRect(250, 225, 15, 25);
+
+            // Draw some books/objects on shelf
+            ctx.fillStyle = '#8B0000';
+            ctx.fillRect(300, 160, 8, 30);
+            ctx.fillStyle = '#006400';
+            ctx.fillRect(310, 160, 8, 30);
+            ctx.fillStyle = '#4B0082';
+            ctx.fillRect(320, 160, 8, 30);
+
+            // Draw LEDs (at specified UV coordinates)
+            // LED 1: UV (0.39, 0.68) = x:200, y:196
+            ctx.fillStyle = '#00FFFF';
+            ctx.fillRect(200, 196, 3, 3);
+            
+            // LED 2: UV (0.46, 0.82) = x:235, y:236  
+            ctx.fillStyle = '#00FF00';
+            ctx.fillRect(235, 236, 3, 3);
+            
+            // LED 3: UV (0.63, 0.80) = x:323, y:230
+            ctx.fillStyle = '#FF0080';
+            ctx.fillRect(323, 230, 3, 3);
+
+            // Draw some cables
+            ctx.strokeStyle = '#333333';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(240, 190);
+            ctx.lineTo(260, 200);
+            ctx.lineTo(280, 210);
+            ctx.stroke();
+
+            // Add some screen glow
+            const screenGlow = ctx.createRadialGradient(195, 140, 20, 195, 140, 80);
+            screenGlow.addColorStop(0, 'rgba(0, 102, 204, 0.2)');
+            screenGlow.addColorStop(1, 'rgba(0, 102, 204, 0.0)');
+            ctx.fillStyle = screenGlow;
+            ctx.beginPath();
+            ctx.arc(195, 140, 80, 0, 2 * Math.PI);
+            ctx.fill();
+
+            console.log('Pixel desk generated!');
+        }
+
+        function downloadImage() {
+            const link = document.createElement('a');
+            link.download = 'pixel-desk-art.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+
+        // Generate initial image
+        generatePixelDesk();
+    </script>
+</body>
+</html>
