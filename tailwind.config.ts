@@ -28,7 +28,7 @@ module.exports = {
       },
       fontFamily: {
         gaming: ['"Press Start 2P"', 'cursive'],
-        mono: ['"Geist Mono"', 'monospace'],
+        mono: ['var(--font-ubuntu)', 'sans-serif'],
       },
     },
   },

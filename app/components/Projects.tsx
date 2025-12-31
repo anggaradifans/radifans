@@ -256,7 +256,7 @@ export default function Projects() {
         </p>
       </motion.div>
       
-      <div className="max-w-6xl mx-auto space-y-8">
+      <div className="max-w-4xl mx-auto space-y-8">
         {projects.map((project, index) => (
           <ProjectCard
             key={project.title}
