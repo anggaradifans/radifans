@@ -63,6 +63,28 @@ const projects: Project[] = [
       "Complex timezone handling and parsing logic",
       "Production-ready webhook integration"
     ]
+  },
+  {
+    title: "Financial Tracker Dashboard",
+    description: "Web-based dashboard for visualizing financial data from the Telegram Financial Tracker",
+    longDescription: "A modern React-based dashboard designed to interface with the Telegram Financial Tracker system. It provides users with deep insights into their financial health through interactive charts, transaction tables, and trend analysis, all synced in real-time with the Supabase backend.",
+    technologies: ["Next.js", "React", "Tailwind CSS", "Recharts", "Supabase", "TypeScript"],
+    githubUrl: "https://github.com/anggaradifans/financial-tracker-dashboard",
+    features: [
+      "Interactive spending visualizations",
+      "Detailed transaction history",
+      "Real-time data synchronization",
+      "Expense categorization management",
+      "Monthly and yearly reports",
+      "Responsive dashboard layout"
+    ],
+    category: "FinTech",
+    icon: TrendingUp,
+    highlights: [
+      "Seamless integration with Telegram bot data",
+      "Advanced charting and analytics",
+      "Modern dashboard UI patterns"
+    ]
   }
 ];
 
