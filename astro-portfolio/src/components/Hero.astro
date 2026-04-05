@@ -1,0 +1,201 @@
+---
+import { profile } from '../data/profile';
+---
+
+<section id="about" class="hero">
+  <!-- Pixel Stars BG -->
+  <div class="stars-bg hero__stars" aria-hidden="true" id="starsContainer"></div>
+
+  <div class="container hero__inner">
+    <!-- Left: Pixel Character Sprite -->
+    <div class="hero__sprite-wrap">
+      <div class="sprite-frame" aria-label="Pixel art character of Angga">
+        <div class="sprite-canvas" id="pixelSprite"></div>
+        <div class="sprite-shadow"></div>
+      </div>
+      <!-- Class badges -->
+      <div class="hero__badges">
+        {profile.roles.map((role) => (
+          <span class="class-badge">[{role.toUpperCase()}]</span>
+        ))}
+      </div>
+    </div>
+
+    <!-- Right: Character Stat Card -->
+    <div class="hero__stat-card reveal">
+      <div class="dialog-box">
+        <!-- Name + Title -->
+        <div class="dialog-box__header">
+          <h1 class="dialog-box__name font-display">{profile.name}</h1>
+          <p class="dialog-box__title font-mono">&gt; {profile.title}</p>
+        </div>
+
+        <div class="dialog-box__body">
+          {profile.bio.map((para) => (
+            <p class="dialog-box__bio">{para}</p>
+          ))}
+        </div>
+
+        <!-- Blinking arrow -->
+        <span class="dialog-box__arrow cursor-blink font-display" aria-hidden="true">▼</span>
+
+        <!-- Action Buttons -->
+        <div class="hero__actions">
+          <a href={profile.cv} download class="btn-primary" aria-label="Download CV">
+            ⬇ DOWNLOAD CV
+          </a>
+          <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" class="btn-secondary" aria-label="LinkedIn profile">
+            in LINKEDIN
+          </a>
+          <a href={profile.github} target="_blank" rel="noopener noreferrer" class="btn-secondary" aria-label="GitHub profile">
+            🐙 GITHUB
+          </a>
+          <a href="#contact" class="btn-primary" aria-label="Contact me">
+            ✉ CONTACT
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    padding-top: 80px;
+    overflow: hidden;
+  }
+  .hero__stars { z-index: 0; }
+  .hero__inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: var(--space-12);
+    align-items: center;
+    width: 100%;
+  }
+
+  /* Sprite frame */
+  .hero__sprite-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+  }
+  .sprite-frame {
+    width: 280px;
+    height: 380px;
+    background: 
+      linear-gradient(rgba(17, 19, 30, 0.2), rgba(17, 19, 30, 0.2)),
+      url('/images/gaming-room.png') center/cover no-repeat;
+    border: 4px solid var(--outline);
+    outline: 2px solid var(--primary-container);
+    outline-offset: -10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 60px rgba(0,0,0,0.6);
+  }
+
+  /* Class badges */
+  .hero__badges {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .class-badge {
+    font-family: var(--font-display);
+    font-size: 8px;
+    color: var(--secondary-fixed-dim);
+    border: 2px solid var(--secondary-container);
+    padding: 4px 10px;
+    letter-spacing: 0.05em;
+  }
+
+  /* Dialog Box */
+  .dialog-box {
+    background: var(--surface-container);
+    border: 4px solid var(--outline);
+    outline: 2px solid var(--surface-container-highest);
+    outline-offset: -6px;
+    padding: var(--space-8);
+    position: relative;
+  }
+  .dialog-box__header { margin-bottom: var(--space-6); }
+  .dialog-box__name {
+    font-size: clamp(10px, 1.5vw, 16px);
+    color: var(--primary-container);
+    letter-spacing: 0.04em;
+    margin-bottom: var(--space-3);
+    line-height: 1.5;
+  }
+  .dialog-box__title {
+    font-size: 20px;
+    color: var(--secondary-fixed-dim);
+  }
+  .dialog-box__body { margin-bottom: var(--space-6); }
+  .dialog-box__bio {
+    font-size: 14px;
+    color: var(--on-surface-variant);
+    line-height: 1.7;
+    margin-bottom: var(--space-4);
+  }
+  .dialog-box__arrow {
+    position: absolute;
+    bottom: 14px;
+    right: 20px;
+    color: var(--primary-container);
+    font-size: 12px;
+  }
+
+  /* Actions */
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+
+  @media (max-width: 900px) {
+    .hero__inner {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    .hero__sprite-wrap { align-items: center; }
+    .hero__actions { justify-content: center; }
+  }
+</style>
+
+<script>
+  // Generate pixel stars
+  const container = document.getElementById('starsContainer');
+  if (container) {
+    for (let i = 0; i < 80; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.cssText = `
+        left: ${Math.random() * 100}%;
+        top: ${Math.random() * 100}%;
+        --dur: ${2 + Math.random() * 4}s;
+        --delay: ${Math.random() * 4}s;
+        opacity: ${0.1 + Math.random() * 0.6};
+      `;
+      container.appendChild(star);
+    }
+  }
+</script>
+
+<style is:global>
+  @keyframes sprite-idle {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+  }
+</style>

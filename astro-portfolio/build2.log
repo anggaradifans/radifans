@@ -1,0 +1,47 @@
+12:47:11 [build] output: "hybrid"
+12:47:11 [build] directory: C:\Users\Angga\Documents\Works\Test\radifans\astro-portfolio\.vercel\output\
+12:47:11 [build] adapter: @astrojs/vercel/serverless
+12:47:11 [build] Collecting build info...
+12:47:11 [build] ??? Completed in 174ms.
+12:47:12 [build] Building hybrid entrypoints...
+npx : 12:47:12 [ERROR] [vite] 
+[31mx[39m Build failed in 157ms
+At line:1 char:38
++ $ErrorActionPreference = 
+'Continue'; npx astro build *>&1 | 
+Out-File  ...
++                                    
+  ~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpe 
+   cified: (12:47:12 [ERROR...faile  
+  d in 157ms:String) [], RemoteExc   
+ eption
+    + FullyQualifiedErrorId : Native 
+   CommandError
+ 
+[commonjs--resolver] Missing 
+"./env/setup" specifier in "astro" 
+package
+  Stack trace:
+    at e (file:///C:/Users/Angga/Docu
+ments/Works/Test/radifans/astro-portf
+olio/node_modules/vite/dist/node/chun
+ks/dep-BK3b2jBa.js:46042:25)
+    at o (file:///C:/Users/Angga/Docu
+ments/Works/Test/radifans/astro-portf
+olio/node_modules/vite/dist/node/chun
+ks/dep-BK3b2jBa.js:46042:1297)
+    at resolveDeepImport (file:///C:/
+Users/Angga/Documents/Works/Test/radi
+fans/astro-portfolio/node_modules/vit
+e/dist/node/chunks/dep-BK3b2jBa.js:46
+686:25)
+    at Object.resolveId (file:///C:/U
+sers/Angga/Documents/Works/Test/radif
+ans/astro-portfolio/node_modules/vite
+/dist/node/chunks/dep-BK3b2jBa.js:462
+01:19)
+    at file:///C:/Users/Angga/Documen
+ts/Works/Test/radifans/astro-portfoli
+o/node_modules/rollup/dist/es/shared/
+node-entry.js:22967:40
