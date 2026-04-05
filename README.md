@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🌌 Radifans — Portfolio (Aether Pixel Edition) 🎮
 
-## Getting Started
+Welcome to the **Aether Pixel** edition of my portfolio! Fully rewritten from Next.js to **Astro 4.x**, this version features a custom "HD-2D" gaming aesthetic with a deep arcade soul.
 
-First, run the development server:
+---
+
+## 🚀 Character Classes (Tech Stack)
+
+*   **Framework**: [Astro 4.x](https://astro.build/) (Static First)
+*   **Aesthetics**: Vanilla CSS (RPG UI, CRT Scanlines, Pixel Scenarios)
+*   **Typography**: *Press Start 2P*, *Outfit*, and *VT323*
+*   **Infrastructure**: [Vercel](https://vercel.com/) (Static Hosting + Standalone Serverless Functions)
+*   **Communications**: [Resend HTTP API](https://resend.com/)
+
+---
+
+## 🛠️ Station Setup (Getting Started)
+
+First, navigate to the portfolio directory and install dependencies:
+
+```bash
+cd astro-portfolio
+npm install --legacy-peer-deps
+```
+
+Then, start the local development world:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open **[http://localhost:4321](http://localhost:4321)** with your browser to explore the realm.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## 🗺️ Project Atlas
 
-## Learn More
+*   `src/data/`: The "Single Source of Truth." Manage your **bio**, **skills**, **experience**, and **projects** here.
+*   `src/components/`: Modular "Gear" (UI components) — Hero, Skills, Quest Log, etc.
+*   `api/send-email.js`: The standalone "Save Point" (Contact Form API).
+*   `public/images/`: Your 16-bit environment scenario and character assets.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚢 Deployment (The World Map)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+This project is optimized for **Vercel**. 
 
-## Deploy on Vercel
+1.  **Framework**: Set to `Astro`.
+2.  **Root Directory**: Set to `astro-portfolio`.
+3.  **Environment Variables**: Ensure `RESEND_API_KEY` and `RESEND_RECIPIENT_EMAIL` are configured in your dashboard.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+**Adventure on!** 🏹⚔️🏆
