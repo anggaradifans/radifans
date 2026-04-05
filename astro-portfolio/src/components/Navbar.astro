@@ -1,0 +1,203 @@
+---
+const navLinks = [
+  { href: '#about',    label: 'About' },
+  { href: '#skills',   label: 'Skills' },
+  { href: '#quest',    label: 'Quest Log' },
+  { href: '#projects', label: 'Projects' },
+  { href: '#contact',  label: 'Contact' },
+];
+---
+
+<nav class="navbar" role="navigation" aria-label="Main navigation">
+  <div class="container navbar__inner">
+    <!-- Logo -->
+    <a href="/" class="navbar__logo" aria-label="radifans home">
+      <span>&gt;&gt; RADIFANS</span><span class="cursor-blink">_</span><span>.EXE</span>
+    </a>
+
+    <!-- Desktop links -->
+    <ul class="navbar__links" role="list">
+      {navLinks.map((link) => (
+        <li>
+          <a class="navbar__link" href={link.href}>[{link.label.toUpperCase()}]</a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Mobile hamburger -->
+    <button class="navbar__hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile drawer -->
+<div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+  <button class="mobile-drawer__close" id="drawerClose" aria-label="Close menu">[X]</button>
+  <ul role="list">
+    {navLinks.map((link) => (
+      <li><a class="mobile-drawer__link" href={link.href}>[{link.label.toUpperCase()}]</a></li>
+    ))}
+  </ul>
+</div>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
+<style>
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(29, 31, 43, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 4px solid var(--outline);
+  }
+  .navbar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .navbar__logo {
+    font-family: var(--font-display);
+    font-size: clamp(9px, 1.2vw, 13px);
+    color: var(--primary-container);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .navbar__links {
+    display: flex;
+    list-style: none;
+    gap: var(--space-2);
+  }
+  .navbar__link {
+    font-family: var(--font-display);
+    font-size: 8px;
+    color: var(--on-surface-variant);
+    text-decoration: none;
+    padding: 6px 10px;
+    letter-spacing: 0.05em;
+    transition: color 0.15s;
+    position: relative;
+  }
+  .navbar__link:hover,
+  .navbar__link.active {
+    color: var(--primary-container);
+  }
+  .navbar__link.active::before { content: '> '; }
+
+  /* Hamburger */
+  .navbar__hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .navbar__hamburger span {
+    display: block;
+    width: 24px;
+    height: 3px;
+    background: var(--primary-container);
+  }
+
+  /* Mobile drawer */
+  .mobile-drawer {
+    position: fixed;
+    top: 0;
+    right: -280px;
+    width: 280px;
+    height: 100dvh;
+    background: var(--surface-container-low);
+    border-left: 4px solid var(--outline);
+    z-index: 200;
+    padding: var(--space-8) var(--space-6);
+    transition: right 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+  .mobile-drawer.open { right: 0; }
+  .mobile-drawer ul { list-style: none; display: flex; flex-direction: column; gap: var(--space-4); }
+  .mobile-drawer__link {
+    font-family: var(--font-display);
+    font-size: 10px;
+    color: var(--on-surface-variant);
+    text-decoration: none;
+    padding: var(--space-3) 0;
+    display: block;
+    border-bottom: 2px solid var(--outline-variant);
+    transition: color 0.15s;
+  }
+  .mobile-drawer__link:hover { color: var(--primary-container); }
+  .mobile-drawer__close {
+    font-family: var(--font-display);
+    font-size: 10px;
+    color: var(--secondary-fixed-dim);
+    background: none;
+    border: none;
+    cursor: pointer;
+    align-self: flex-end;
+  }
+  .mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 150;
+  }
+  .mobile-overlay.open { display: block; }
+
+  @media (max-width: 768px) {
+    .navbar__links   { display: none; }
+    .navbar__hamburger { display: flex; }
+  }
+</style>
+
+<script>
+  // Active link highlight
+  const links = document.querySelectorAll<HTMLAnchorElement>('.navbar__link');
+  const sections = document.querySelectorAll<HTMLElement>('section[id]');
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          links.forEach((l) => l.classList.remove('active'));
+          const active = document.querySelector<HTMLAnchorElement>(`.navbar__link[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    },
+    { threshold: 0.4 }
+  );
+  sections.forEach((s) => observer.observe(s));
+
+  // Mobile drawer
+  const hamburger = document.getElementById('hamburger')!;
+  const drawer    = document.getElementById('mobileDrawer')!;
+  const overlay   = document.getElementById('mobileOverlay')!;
+  const close     = document.getElementById('drawerClose')!;
+
+  const openDrawer = () => {
+    drawer.classList.add('open');
+    overlay.classList.add('open');
+    hamburger.setAttribute('aria-expanded', 'true');
+    drawer.setAttribute('aria-hidden', 'false');
+  };
+  const closeDrawer = () => {
+    drawer.classList.remove('open');
+    overlay.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    drawer.setAttribute('aria-hidden', 'true');
+  };
+
+  hamburger.addEventListener('click', openDrawer);
+  close.addEventListener('click', closeDrawer);
+  overlay.addEventListener('click', closeDrawer);
+  drawer.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeDrawer));
+</script>

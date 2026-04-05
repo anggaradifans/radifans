@@ -1,0 +1,156 @@
+---
+import { skills, skillCategories } from '../data/skills';
+---
+
+<section id="skills">
+  <div class="container">
+    <h2 class="section-heading reveal">SKILLS &amp; EQUIPMENT</h2>
+
+    <!-- Category tabs -->
+    <div class="tab-bar reveal" role="tablist" aria-label="Skill categories">
+      {skillCategories.map((cat, i) => (
+        <button
+          class={`tab-btn${i === 0 ? ' active' : ''}`}
+          data-cat={cat}
+          role="tab"
+          aria-selected={i === 0 ? 'true' : 'false'}
+          aria-controls={`panel-${cat}`}
+          id={`tab-${cat}`}
+        >
+          [{cat.toUpperCase()}]
+        </button>
+      ))}
+    </div>
+
+    <!-- Skill panels -->
+    {skillCategories.map((cat, i) => {
+      const catSkills = skills.filter((s) => s.category === cat);
+      return (
+        <div
+          class={`skills-panel${i === 0 ? ' active' : ''}`}
+          id={`panel-${cat}`}
+          role="tabpanel"
+          aria-labelledby={`tab-${cat}`}
+          hidden={i !== 0}
+        >
+          <div class="skills-grid">
+            {catSkills.map((skill) => (
+              <div
+                class="skill-slot reveal"
+                title={`${skill.name} · ${skill.category}`}
+                style={`--skill-color: ${skill.color}`}
+              >
+              <div class="skill-slot__icon">
+                  <img
+                    src={skill.localIcon ?? `https://api.iconify.design/${skill.icon.replace(':', '/')}.svg?color=${encodeURIComponent(skill.color)}&width=40&height=40`}
+                    alt={skill.name}
+                    width="40"
+                    height="40"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <span class="skill-slot__name font-mono">{skill.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</section>
+
+<style>
+  /* Tab bar */
+  .tab-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-8);
+  }
+  .tab-btn {
+    font-family: var(--font-display);
+    font-size: 8px;
+    color: var(--on-surface-variant);
+    background: var(--surface-container-low);
+    border: 2px solid var(--outline-variant);
+    border-radius: 0;
+    padding: 8px 14px;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+  }
+  .tab-btn:hover,
+  .tab-btn.active {
+    color: var(--primary-container);
+    border-color: var(--primary-container);
+    background: var(--surface-container);
+  }
+  .tab-btn.active {
+    box-shadow: 0 4px 0 0 var(--primary-container);
+  }
+
+  /* Skills grid */
+  .skills-panel { display: none; }
+  .skills-panel.active { display: block; }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: var(--space-4);
+  }
+
+  /* Skill slot — inventory cell */
+  .skill-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    background: var(--surface-container-low);
+    border: 2px solid var(--outline-variant);
+    cursor: default;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+  .skill-slot:hover {
+    border-color: var(--skill-color, var(--primary-container));
+    box-shadow: 0 0 14px color-mix(in srgb, var(--skill-color, #4fffb0) 40%, transparent);
+    background: var(--surface-container);
+  }
+  .skill-slot__icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .skill-slot__icon img {
+    image-rendering: auto;
+    filter: drop-shadow(0 0 4px var(--skill-color, var(--primary-container)));
+  }
+  .skill-slot__name {
+    font-size: 16px;
+    color: var(--on-surface-variant);
+    text-align: center;
+    line-height: 1.2;
+  }
+</style>
+
+<script>
+  // Tab switching
+  const tabBtns = document.querySelectorAll<HTMLButtonElement>('.tab-btn');
+  const panels  = document.querySelectorAll<HTMLElement>('.skills-panel');
+
+  tabBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const cat = btn.dataset.cat!;
+
+      tabBtns.forEach((b) => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+      panels.forEach((p) => { p.classList.remove('active'); p.hidden = true; });
+
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      const panel = document.getElementById(`panel-${cat}`);
+      if (panel) { panel.classList.add('active'); panel.hidden = false; }
+    });
+  });
+</script>

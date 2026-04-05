@@ -1,0 +1,233 @@
+---
+import { projects } from '../data/projects';
+
+const categoryColors: Record<string, string> = {
+  'E-Commerce': '#4fffb0',
+  'FinTech':    '#bf5af2',
+  'Full-Stack': '#ffd700',
+};
+---
+
+<section id="projects">
+  <div class="container">
+    <h2 class="section-heading reveal">ACHIEVEMENTS UNLOCKED</h2>
+
+    <div class="projects-grid">
+      {projects.map((project, i) => {
+        const color = categoryColors[project.category] ?? '#4fffb0';
+        return (
+          <article class="achievement-card pixel-card reveal" style={`--cat-color: ${color}`}>
+            <!-- Top banner: category -->
+            <div class="achievement-card__banner">
+              <span class="achievement-card__cat font-mono">{project.category}</span>
+              <span class="stars font-mono" aria-label="3 stars">★★★</span>
+            </div>
+
+            <!-- Title -->
+            <h3 class="achievement-card__title font-display">{project.title}</h3>
+
+            <!-- Short desc -->
+            <p class="achievement-card__desc">{project.description}</p>
+
+            <!-- Tech badges -->
+            <div class="achievement-card__tech">
+              {project.technologies.map((t) => (
+                <span class="chip">{t}</span>
+              ))}
+            </div>
+
+            <!-- Links row -->
+            <div class="achievement-card__links">
+              {project.liveUrl && (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-primary"
+                  aria-label={`Live demo of ${project.title}`}
+                >
+                  🌐 LIVE DEMO
+                </a>
+              )}
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-secondary"
+                aria-label={`Source code of ${project.title}`}
+              >
+                🐙 SOURCE CODE
+              </a>
+            </div>
+
+            <!-- Expand toggle -->
+            <button
+              class="achievement-card__toggle font-display"
+              data-target={`project-details-${i}`}
+              aria-expanded="false"
+              aria-controls={`project-details-${i}`}
+            >
+              [▶ VIEW DETAILS]
+            </button>
+
+            <!-- Expanded content -->
+            <div class="project-details" id={`project-details-${i}`} hidden>
+              <p class="project-details__long">{project.longDescription}</p>
+
+              <h4 class="project-details__sub font-display">KEY FEATURES</h4>
+              <ul class="project-details__features">
+                {project.features.map((f) => (
+                  <li><span class="desc-bullet font-mono">▸</span> {f}</li>
+                ))}
+              </ul>
+
+              <h4 class="project-details__sub font-display">HIGHLIGHTS</h4>
+              <ul class="project-details__features">
+                {project.highlights.map((h) => (
+                  <li><span class="desc-bullet font-mono">★</span> {h}</li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style>
+  .projects-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  /* Achievement card */
+  .achievement-card {
+    border-color: var(--cat-color, var(--outline)) !important;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .achievement-card:hover {
+    box-shadow: 0 0 16px color-mix(in srgb, var(--cat-color, #4fffb0) 35%, transparent);
+  }
+
+  /* Banner */
+  .achievement-card__banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 2px solid var(--outline-variant);
+  }
+  .achievement-card__cat {
+    font-size: 18px;
+    color: var(--cat-color, var(--primary-container));
+    text-transform: uppercase;
+  }
+  .stars { font-size: 18px; color: var(--tertiary-container); letter-spacing: 0.1em; }
+
+  /* Title */
+  .achievement-card__title {
+    font-size: clamp(9px, 1.3vw, 13px);
+    color: var(--on-surface);
+    margin-bottom: var(--space-4);
+    line-height: 1.7;
+  }
+
+  /* Short desc */
+  .achievement-card__desc {
+    font-size: 14px;
+    color: var(--on-surface-variant);
+    line-height: 1.7;
+    margin-bottom: var(--space-4);
+  }
+
+  /* Tech tags */
+  .achievement-card__tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  /* Links */
+  .achievement-card__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+
+  /* Toggle */
+  .achievement-card__toggle {
+    font-size: 8px;
+    color: var(--secondary-fixed-dim);
+    background: none;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    padding: 0;
+    transition: color 0.15s;
+  }
+  .achievement-card__toggle:hover { color: var(--primary-container); }
+  .achievement-card__toggle[aria-expanded="true"] { color: var(--primary-container); }
+
+  /* Details */
+  .project-details {
+    margin-top: var(--space-6);
+    border-top: 2px solid var(--outline-variant);
+    padding-top: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .project-details__long {
+    font-size: 14px;
+    color: var(--on-surface-variant);
+    line-height: 1.8;
+  }
+  .project-details__sub {
+    font-size: 8px;
+    color: var(--secondary-fixed-dim);
+    letter-spacing: 0.06em;
+    margin-top: var(--space-2);
+  }
+  .project-details__features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .project-details__features li {
+    font-size: 14px;
+    color: var(--on-surface-variant);
+    display: flex;
+    gap: var(--space-2);
+    align-items: flex-start;
+    line-height: 1.6;
+  }
+  .desc-bullet {
+    font-size: 18px;
+    color: var(--primary-container);
+    flex-shrink: 0;
+    line-height: 1.3;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.achievement-card__toggle').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.dataset.target!;
+      const detail   = document.getElementById(targetId);
+      if (!detail) return;
+
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!isOpen));
+      detail.hidden = isOpen;
+      btn.textContent = isOpen ? '[▶ VIEW DETAILS]' : '[▼ CLOSE DETAILS]';
+    });
+  });
+</script>
