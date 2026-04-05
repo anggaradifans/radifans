@@ -1,10 +1,10 @@
 # Astro build artifacts
-dist/
+/dist
 .astro/
 .vercel/
 
 # Dependencies
-node_modules/
+/node_modules
 
 # Environment variables
 .env
