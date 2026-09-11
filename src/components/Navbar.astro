@@ -2,7 +2,7 @@
 const navLinks = [
   { href: '#about',    label: 'About' },
   { href: '#skills',   label: 'Skills' },
-  { href: '#quest',    label: 'Quest Log' },
+  { href: '#quest',    label: 'Experience' },
   { href: '#projects', label: 'Projects' },
   { href: '#contact',  label: 'Contact' },
 ];
@@ -10,33 +10,30 @@ const navLinks = [
 
 <nav class="navbar" role="navigation" aria-label="Main navigation">
   <div class="container navbar__inner">
-    <!-- Logo -->
     <a href="/" class="navbar__logo" aria-label="radifans home">
-      <span>&gt;&gt; RADIFANS</span><span class="cursor-blink">_</span><span>.EXE</span>
+      <span>RADIFANS</span><span class="cursor-blink">_</span>
     </a>
 
-    <!-- Desktop links -->
     <ul class="navbar__links" role="list">
       {navLinks.map((link) => (
         <li>
-          <a class="navbar__link" href={link.href}>[{link.label.toUpperCase()}]</a>
+          <a class="navbar__link" href={link.href}>{link.label}</a>
         </li>
       ))}
     </ul>
 
-    <!-- Mobile hamburger -->
     <button class="navbar__hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span class="navbar__hamburger-label">Menu</span>
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 
-<!-- Mobile drawer -->
 <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
-  <button class="mobile-drawer__close" id="drawerClose" aria-label="Close menu">[X]</button>
+  <button class="mobile-drawer__close" id="drawerClose" aria-label="Close menu">Close</button>
   <ul role="list">
     {navLinks.map((link) => (
-      <li><a class="mobile-drawer__link" href={link.href}>[{link.label.toUpperCase()}]</a></li>
+      <li><a class="mobile-drawer__link" href={link.href}>{link.label}</a></li>
     ))}
   </ul>
 </div>
@@ -49,9 +46,7 @@ const navLinks = [
     left: 0;
     right: 0;
     z-index: 100;
-    background: rgba(29, 31, 43, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: rgba(12, 14, 24, 0.94);
     border-bottom: 4px solid var(--outline);
   }
   .navbar__inner {
@@ -62,24 +57,25 @@ const navLinks = [
   }
   .navbar__logo {
     font-family: var(--font-display);
-    font-size: clamp(9px, 1.2vw, 13px);
+    font-size: clamp(14px, 1.4vw, 18px);
+    font-weight: 800;
     color: var(--primary-container);
     text-decoration: none;
-    letter-spacing: 0.04em;
+    letter-spacing: 0;
     white-space: nowrap;
   }
   .navbar__links {
     display: flex;
     list-style: none;
-    gap: var(--space-2);
+    gap: var(--space-1);
   }
   .navbar__link {
-    font-family: var(--font-display);
-    font-size: 8px;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 700;
     color: var(--on-surface-variant);
     text-decoration: none;
     padding: 6px 10px;
-    letter-spacing: 0.05em;
     transition: color 0.15s;
     position: relative;
   }
@@ -87,26 +83,35 @@ const navLinks = [
   .navbar__link.active {
     color: var(--primary-container);
   }
-  .navbar__link.active::before { content: '> '; }
+  .navbar__link.active::before { content: '['; }
+  .navbar__link.active::after { content: ']'; }
 
-  /* Hamburger */
   .navbar__hamburger {
     display: none;
-    flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface-container-low);
+    color: var(--primary-container);
+    border: 2px solid var(--outline);
     cursor: pointer;
-    padding: 4px;
+    min-height: 44px;
+    padding: 8px 10px;
+    font-family: var(--font-ui);
+    font-weight: 700;
   }
+  .navbar__hamburger-label { width: auto; height: auto; background: transparent; }
   .navbar__hamburger span {
     display: block;
     width: 24px;
     height: 3px;
     background: var(--primary-container);
   }
+  .navbar__hamburger .navbar__hamburger-label {
+    width: auto;
+    height: auto;
+    background: none;
+  }
 
-  /* Mobile drawer */
   .mobile-drawer {
     position: fixed;
     top: 0;
@@ -125,8 +130,9 @@ const navLinks = [
   .mobile-drawer.open { right: 0; }
   .mobile-drawer ul { list-style: none; display: flex; flex-direction: column; gap: var(--space-4); }
   .mobile-drawer__link {
-    font-family: var(--font-display);
-    font-size: 10px;
+    font-family: var(--font-ui);
+    font-size: 18px;
+    font-weight: 700;
     color: var(--on-surface-variant);
     text-decoration: none;
     padding: var(--space-3) 0;
@@ -136,13 +142,16 @@ const navLinks = [
   }
   .mobile-drawer__link:hover { color: var(--primary-container); }
   .mobile-drawer__close {
-    font-family: var(--font-display);
-    font-size: 10px;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 700;
     color: var(--secondary-fixed-dim);
-    background: none;
-    border: none;
+    background: var(--surface-container);
+    border: 2px solid var(--secondary-container);
     cursor: pointer;
     align-self: flex-end;
+    min-height: 44px;
+    padding: 8px 12px;
   }
   .mobile-overlay {
     display: none;
@@ -155,12 +164,11 @@ const navLinks = [
 
   @media (max-width: 768px) {
     .navbar__links   { display: none; }
-    .navbar__hamburger { display: flex; }
+    .navbar__hamburger { display: inline-flex; }
   }
 </style>
 
 <script>
-  // Active link highlight
   const links = document.querySelectorAll<HTMLAnchorElement>('.navbar__link');
   const sections = document.querySelectorAll<HTMLElement>('section[id]');
   const observer = new IntersectionObserver(
@@ -177,7 +185,6 @@ const navLinks = [
   );
   sections.forEach((s) => observer.observe(s));
 
-  // Mobile drawer
   const hamburger = document.getElementById('hamburger')!;
   const drawer    = document.getElementById('mobileDrawer')!;
   const overlay   = document.getElementById('mobileOverlay')!;
@@ -188,6 +195,7 @@ const navLinks = [
     overlay.classList.add('open');
     hamburger.setAttribute('aria-expanded', 'true');
     drawer.setAttribute('aria-hidden', 'false');
+    close.focus();
   };
   const closeDrawer = () => {
     drawer.classList.remove('open');
@@ -200,4 +208,7 @@ const navLinks = [
   close.addEventListener('click', closeDrawer);
   overlay.addEventListener('click', closeDrawer);
   drawer.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeDrawer));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeDrawer();
+  });
 </script>

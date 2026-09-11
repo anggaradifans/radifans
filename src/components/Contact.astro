@@ -4,16 +4,15 @@ import { profile } from '../data/profile';
 
 <section id="contact" class="contact-section">
   <div class="container">
-    <h2 class="section-heading reveal">SAVE POINT — GET IN TOUCH</h2>
+    <h2 class="section-heading reveal">Contact</h2>
 
     <div class="contact-layout reveal">
-      <!-- Form -->
       <div class="contact-form-wrap pixel-card">
-        <p class="contact-form-wrap__sub font-mono">&gt; TRANSMIT A MESSAGE_</p>
+        <p class="contact-form-wrap__sub font-mono">Send a message</p>
 
         <form class="contact-form" id="contactForm" novalidate>
           <div class="form-group">
-            <label class="pixel-label" for="contact-name">PLAYER NAME</label>
+            <label class="pixel-label" for="contact-name">Name</label>
             <input
               class="pixel-input"
               type="text"
@@ -26,7 +25,7 @@ import { profile } from '../data/profile';
           </div>
 
           <div class="form-group">
-            <label class="pixel-label" for="contact-email">SIGNAL ADDRESS</label>
+            <label class="pixel-label" for="contact-email">Email address</label>
             <input
               class="pixel-input"
               type="email"
@@ -39,7 +38,7 @@ import { profile } from '../data/profile';
           </div>
 
           <div class="form-group">
-            <label class="pixel-label" for="contact-message">YOUR MESSAGE</label>
+            <label class="pixel-label" for="contact-message">Message</label>
             <textarea
               class="pixel-input"
               id="contact-message"
@@ -50,32 +49,30 @@ import { profile } from '../data/profile';
             ></textarea>
           </div>
 
-          <button type="submit" class="btn-primary contact-submit" id="submitBtn">
-            ✉ SEND MESSAGE ▶▶
+          <button type="submit" class="btn-primary contact-submit" id="submitBtn" data-idle-label="Send Message">
+            Send Message
           </button>
 
-          <!-- Status messages -->
           <div class="contact-status" id="contactStatus" aria-live="polite" hidden>
             <span class="contact-status__text font-mono" id="statusText"></span>
           </div>
         </form>
       </div>
 
-      <!-- CTA links -->
       <div class="contact-links">
-        <h3 class="contact-links__heading font-display">QUICK LINKS</h3>
+        <h3 class="contact-links__heading font-display">Quick Links</h3>
 
         <a href={profile.cv} download class="cta-link btn-primary" aria-label="Download Angga's CV">
-          ⬇ DOWNLOAD CV
+          Download CV
         </a>
         <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" class="cta-link btn-secondary" aria-label="LinkedIn profile">
-          in LINKEDIN
+          LinkedIn
         </a>
         <a href={profile.github} target="_blank" rel="noopener noreferrer" class="cta-link btn-secondary" aria-label="GitHub profile">
-          🐙 GITHUB
+          GitHub
         </a>
         <a href={`mailto:${profile.email}`} class="cta-link btn-secondary" aria-label="Send email">
-          ✉ EMAIL
+          Email
         </a>
       </div>
     </div>
@@ -96,7 +93,6 @@ import { profile } from '../data/profile';
     margin: 0 auto;
   }
 
-  /* Form wrap */
   .contact-form-wrap__sub {
     font-size: 18px;
     color: var(--secondary-fixed-dim);
@@ -109,9 +105,8 @@ import { profile } from '../data/profile';
   }
   .form-group { display: flex; flex-direction: column; gap: var(--space-1); }
   textarea.pixel-input { resize: vertical; min-height: 120px; font-family: var(--font-mono); }
-  .contact-submit { width: 100%; justify-content: center; font-size: 9px; }
+  .contact-submit { width: 100%; justify-content: center; font-size: 13px; }
 
-  /* Status */
   .contact-status {
     padding: var(--space-3);
     background: var(--surface-container);
@@ -123,7 +118,6 @@ import { profile } from '../data/profile';
   .contact-status.error   { border-color: var(--error); }
   .contact-status.error   .contact-status__text { color: var(--error); }
 
-  /* CTA links */
   .contact-links {
     display: flex;
     flex-direction: column;
@@ -131,9 +125,9 @@ import { profile } from '../data/profile';
     padding-top: var(--space-8);
   }
   .contact-links__heading {
-    font-size: 9px;
+    font-size: 16px;
+    font-weight: 800;
     color: var(--on-surface-variant);
-    letter-spacing: 0.06em;
     margin-bottom: var(--space-2);
   }
   .cta-link { width: 100%; justify-content: center; }
@@ -141,6 +135,10 @@ import { profile } from '../data/profile';
   @media (max-width: 768px) {
     .contact-layout { grid-template-columns: 1fr; }
     .contact-links { padding-top: 0; }
+    .contact-submit,
+    .cta-link {
+      min-height: 44px;
+    }
   }
 </style>
 
@@ -152,11 +150,28 @@ import { profile } from '../data/profile';
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    btn.disabled = true;
-    btn.textContent = '[ ··· TRANSMITTING ··· ]';
-
     const formData = new FormData(form);
-    const body = Object.fromEntries(formData);
+    const name = String(formData.get('name') || '').trim();
+    const email = String(formData.get('email') || '').trim();
+    const message = String(formData.get('message') || '').trim();
+
+    statusEl.hidden = false;
+    statusEl.className = 'contact-status';
+    if (!name || !email || !message) {
+      statusEl.classList.add('error');
+      statusTx.textContent = 'Name, email, and message are required.';
+      return;
+    }
+    if (!email.includes('@')) {
+      statusEl.classList.add('error');
+      statusTx.textContent = 'Use a valid email address.';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+
+    const body = { name, email, message };
 
     try {
       const res = await fetch('/api/send-email', {
@@ -169,20 +184,20 @@ import { profile } from '../data/profile';
       statusEl.className = 'contact-status';
       if (res.ok) {
         statusEl.classList.add('success');
-        statusTx.textContent = '✅ MESSAGE SAVED! I will get back to you soon.';
+        statusTx.textContent = 'Message sent. I will get back to you soon.';
         form.reset();
       } else {
         const errorData = await res.json();
         statusEl.classList.add('error');
-        statusTx.textContent = `❌ ${errorData.error || 'TRANSMISSION FAILED. Please try again.'}`;
+        statusTx.textContent = errorData.error || 'Transmission failed. Please try again.';
       }
     } catch {
       statusEl.hidden = false;
       statusEl.classList.add('error');
-      statusTx.textContent = '❌ TRANSMISSION FAILED. Please try again.';
+      statusTx.textContent = 'Transmission failed. Please try again.';
     } finally {
       btn.disabled = false;
-      btn.textContent = '✉ SEND MESSAGE ▶▶';
+      btn.textContent = btn.dataset.idleLabel || 'Send Message';
     }
   });
 </script>

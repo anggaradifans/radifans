@@ -3,31 +3,27 @@ import { profile } from '../data/profile';
 ---
 
 <section id="about" class="hero">
-  <!-- Pixel Stars BG -->
-  <div class="stars-bg hero__stars" aria-hidden="true" id="starsContainer"></div>
-
   <div class="container hero__inner">
-    <!-- Left: Pixel Character Sprite -->
-    <div class="hero__sprite-wrap">
-      <div class="sprite-frame" aria-label="Pixel art character of Angga">
-        <div class="sprite-canvas" id="pixelSprite"></div>
-        <div class="sprite-shadow"></div>
+    <div class="hero__visual" aria-label="Aether Pixel workspace scene">
+      <div class="sprite-frame">
+        <div class="hero__terminal">
+          <span>Work snapshot</span>
+          <strong>React / Node / Java</strong>
+          <span>Fintech, health, commerce</span>
+        </div>
       </div>
-      <!-- Class badges -->
       <div class="hero__badges">
         {profile.roles.map((role) => (
-          <span class="class-badge">[{role.toUpperCase()}]</span>
+          <span class="class-badge">{role}</span>
         ))}
       </div>
     </div>
 
-    <!-- Right: Character Stat Card -->
     <div class="hero__stat-card reveal">
       <div class="dialog-box">
-        <!-- Name + Title -->
         <div class="dialog-box__header">
           <h1 class="dialog-box__name font-display">{profile.name}</h1>
-          <p class="dialog-box__title font-mono">&gt; {profile.title}</p>
+          <p class="dialog-box__title font-mono">{profile.title}</p>
         </div>
 
         <div class="dialog-box__body">
@@ -36,22 +32,18 @@ import { profile } from '../data/profile';
           ))}
         </div>
 
-        <!-- Blinking arrow -->
-        <span class="dialog-box__arrow cursor-blink font-display" aria-hidden="true">▼</span>
-
-        <!-- Action Buttons -->
         <div class="hero__actions">
           <a href={profile.cv} download class="btn-primary" aria-label="Download CV">
-            ⬇ DOWNLOAD CV
+            Download CV
           </a>
           <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" class="btn-secondary" aria-label="LinkedIn profile">
-            in LINKEDIN
+            LinkedIn
           </a>
           <a href={profile.github} target="_blank" rel="noopener noreferrer" class="btn-secondary" aria-label="GitHub profile">
-            🐙 GITHUB
+            GitHub
           </a>
           <a href="#contact" class="btn-primary" aria-label="Contact me">
-            ✉ CONTACT
+            Send Message
           </a>
         </div>
       </div>
@@ -62,35 +54,44 @@ import { profile } from '../data/profile';
 <style>
   .hero {
     position: relative;
-    min-height: 100dvh;
+    min-height: 92dvh;
     display: flex;
     align-items: center;
     padding-top: 80px;
     overflow: hidden;
   }
-  .hero__stars { z-index: 0; }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 80px 0 auto 0;
+    height: 44%;
+    background:
+      linear-gradient(90deg, transparent 0 16px, rgba(79,255,176,0.08) 16px 20px, transparent 20px 72px),
+      linear-gradient(180deg, rgba(191,90,242,0.12), transparent 70%);
+    opacity: 0.55;
+    pointer-events: none;
+  }
   .hero__inner {
     position: relative;
     z-index: 1;
     display: grid;
-    grid-template-columns: 1fr 1.4fr;
+    grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.45fr);
     gap: var(--space-12);
     align-items: center;
     width: 100%;
   }
 
-  /* Sprite frame */
-  .hero__sprite-wrap {
+  .hero__visual {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: var(--space-6);
   }
   .sprite-frame {
-    width: 280px;
-    height: 380px;
+    width: min(100%, 330px);
+    aspect-ratio: 0.78;
     background: 
-      linear-gradient(rgba(17, 19, 30, 0.2), rgba(17, 19, 30, 0.2)),
+      linear-gradient(180deg, rgba(12, 14, 24, 0.12), rgba(12, 14, 24, 0.76)),
       url('/images/gaming-room.png') center/cover no-repeat;
     border: 4px solid var(--outline);
     outline: 2px solid var(--primary-container);
@@ -103,8 +104,34 @@ import { profile } from '../data/profile';
     overflow: hidden;
     box-shadow: inset 0 0 60px rgba(0,0,0,0.6);
   }
+  .sprite-frame::after {
+    content: '';
+    position: absolute;
+    inset: auto 24px 24px 24px;
+    height: 8px;
+    background: var(--primary-container);
+    box-shadow: 0 0 18px var(--primary-fixed-dim);
+  }
+  .hero__terminal {
+    position: absolute;
+    left: var(--space-4);
+    right: var(--space-4);
+    bottom: var(--space-12);
+    display: grid;
+    gap: var(--space-1);
+    background: rgba(12, 14, 24, 0.88);
+    border: 2px solid var(--outline);
+    padding: var(--space-4);
+    font-family: var(--font-mono);
+    color: var(--on-surface-variant);
+    font-size: 18px;
+  }
+  .hero__terminal strong {
+    color: var(--primary-container);
+    font-family: var(--font-ui);
+    font-size: 15px;
+  }
 
-  /* Class badges */
   .hero__badges {
     display: flex;
     gap: var(--space-2);
@@ -113,14 +140,14 @@ import { profile } from '../data/profile';
   }
   .class-badge {
     font-family: var(--font-display);
-    font-size: 8px;
+    font-size: 13px;
+    font-weight: 700;
     color: var(--secondary-fixed-dim);
     border: 2px solid var(--secondary-container);
-    padding: 4px 10px;
-    letter-spacing: 0.05em;
+    padding: 6px 10px;
+    letter-spacing: 0;
   }
 
-  /* Dialog Box */
   .dialog-box {
     background: var(--surface-container);
     border: 4px solid var(--outline);
@@ -131,14 +158,13 @@ import { profile } from '../data/profile';
   }
   .dialog-box__header { margin-bottom: var(--space-6); }
   .dialog-box__name {
-    font-size: clamp(10px, 1.5vw, 16px);
+    font-size: clamp(16px, 3.4vw, 42px);
     color: var(--primary-container);
-    letter-spacing: 0.04em;
     margin-bottom: var(--space-3);
-    line-height: 1.5;
+    line-height: 1.35;
   }
   .dialog-box__title {
-    font-size: 20px;
+    font-size: 22px;
     color: var(--secondary-fixed-dim);
   }
   .dialog-box__body { margin-bottom: var(--space-6); }
@@ -148,15 +174,7 @@ import { profile } from '../data/profile';
     line-height: 1.7;
     margin-bottom: var(--space-4);
   }
-  .dialog-box__arrow {
-    position: absolute;
-    bottom: 14px;
-    right: 20px;
-    color: var(--primary-container);
-    font-size: 12px;
-  }
 
-  /* Actions */
   .hero__actions {
     display: flex;
     flex-wrap: wrap;
@@ -169,29 +187,24 @@ import { profile } from '../data/profile';
       grid-template-columns: 1fr;
       text-align: center;
     }
-    .hero__sprite-wrap { align-items: center; }
+    .hero__visual { align-items: center; }
     .hero__actions { justify-content: center; }
   }
-</style>
-
-<script>
-  // Generate pixel stars
-  const container = document.getElementById('starsContainer');
-  if (container) {
-    for (let i = 0; i < 80; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
-      star.style.cssText = `
-        left: ${Math.random() * 100}%;
-        top: ${Math.random() * 100}%;
-        --dur: ${2 + Math.random() * 4}s;
-        --delay: ${Math.random() * 4}s;
-        opacity: ${0.1 + Math.random() * 0.6};
-      `;
-      container.appendChild(star);
+  @media (max-width: 520px) {
+    .hero {
+      min-height: auto;
+      padding-top: 104px;
+    }
+    .dialog-box {
+      padding: var(--space-6);
+    }
+    .hero__actions a {
+      width: 100%;
+      justify-content: center;
+      min-height: 44px;
     }
   }
-</script>
+</style>
 
 <style is:global>
   @keyframes sprite-idle {

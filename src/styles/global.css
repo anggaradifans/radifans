@@ -1,23 +1,18 @@
 /* ============================================================
-   AETHER PIXEL — Design System Tokens
-   Extracted from Stitch "Portofolio Radifans" project
+   AETHER PIXEL Design System Tokens
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@300;400;500;600;700&family=VT323&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
-/* ── Reset ─────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
-/* ── CSS Custom Properties ──────────────────────────────────── */
 :root {
-  /* Brand Accents */
   --color-primary:   #4fffb0;
   --color-secondary: #bf5af2;
   --color-tertiary:  #ffd700;
   --color-neutral:   #0d0f1a;
 
-  /* Surfaces */
   --background:                  #11131e;
   --surface:                     #11131e;
   --surface-dim:                 #11131e;
@@ -30,16 +25,13 @@ html { scroll-behavior: smooth; }
   --surface-variant:             #323440;
   --surface-tint:                #1de296;
 
-  /* On-surface text */
   --on-background:      #e1e1f2;
   --on-surface:         #e1e1f2;
   --on-surface-variant: #bacbbe;
 
-  /* Borders */
   --outline:         #859589;
   --outline-variant: #3b4a40;
 
-  /* Primary (Neon Mint) */
   --primary:                  #ffffff;
   --primary-container:        #4fffb0;
   --primary-fixed:            #4fffb0;
@@ -49,7 +41,6 @@ html { scroll-behavior: smooth; }
   --on-primary-fixed:         #002112;
   --on-primary-fixed-variant: #005233;
 
-  /* Secondary (Arcane Purple) */
   --secondary:                  #e9b3ff;
   --secondary-container:        #7d01b1;
   --secondary-fixed:            #f6d9ff;
@@ -57,20 +48,17 @@ html { scroll-behavior: smooth; }
   --on-secondary:               #510074;
   --on-secondary-container:     #e5a9ff;
 
-  /* Tertiary (Legendary Gold) */
   --tertiary:           #ffffff;
   --tertiary-container: #ffe16c;
   --tertiary-fixed:     #ffe16d;
   --tertiary-fixed-dim: #e9c400;
   --on-tertiary:        #3a3000;
 
-  /* Error */
   --error:             #ffb4ab;
   --error-container:   #93000a;
   --on-error:          #690005;
   --on-error-container:#ffdad6;
 
-  /* Spacing */
   --space-1:  4px;
   --space-2:  8px;
   --space-3:  12px;
@@ -81,7 +69,6 @@ html { scroll-behavior: smooth; }
   --space-16: 64px;
   --space-24: 96px;
 
-  /* Borders / Shadows */
   --border-pixel:          4px solid var(--outline);
   --border-ghost:          1px solid rgba(59, 74, 64, 0.15);
   --border-radius:         0px;
@@ -90,37 +77,50 @@ html { scroll-behavior: smooth; }
   --shadow-pixel-primary:  4px 4px 0px var(--on-primary-fixed-variant);
   --shadow-pixel-secondary:4px 4px 0px var(--secondary-container);
 
-  /* Typography */
-  --font-display: 'Press Start 2P', monospace;
-  --font-body:    'Outfit', sans-serif;
-  --font-mono:    'VT323', monospace;
-  --font-ui:      'Space Grotesk', sans-serif;
+  --font-primary: 'Outfit', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: var(--font-primary);
+  --font-body:    var(--font-primary);
+  --font-mono:    var(--font-primary);
+  --font-ui:      var(--font-primary);
 }
 
-/* ── Base Styles ─────────────────────────────────────────────── */
 body {
-  background-color: var(--background);
+  background:
+    linear-gradient(180deg, var(--surface-container-lowest) 0%, var(--background) 38%, var(--surface-container-lowest) 100%);
   color: var(--on-surface);
-  font-family: var(--font-body);
+  font-family: var(--font-primary);
   font-size: 16px;
   line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
 }
 
-/* ── Typography Utilities ────────────────────────────────────── */
+a {
+  color: inherit;
+}
+
 .font-display { font-family: var(--font-display); }
 .font-body    { font-family: var(--font-body); }
 .font-mono    { font-family: var(--font-mono); }
 .font-ui      { font-family: var(--font-ui); }
 
-/* ── Scrollbar ───────────────────────────────────────────────── */
+button,
+a,
+input,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 3px solid var(--tertiary-container);
+  outline-offset: 4px;
+}
+
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--surface-container-lowest); }
 ::-webkit-scrollbar-thumb { background: var(--primary-container); }
 ::-webkit-scrollbar-thumb:hover { background: var(--primary-fixed-dim); }
 
-/* ── Pixel Card (SNES Dialog Box) ────────────────────────────── */
 .pixel-card {
   background: var(--surface-container);
   border: 4px solid var(--outline);
@@ -134,7 +134,6 @@ body {
   box-shadow: var(--shadow-glow-secondary);
 }
 
-/* ── Pixel Button ────────────────────────────────────────────── */
 .btn-primary {
   display: inline-flex;
   align-items: center;
@@ -145,9 +144,10 @@ body {
   border-radius: 0;
   padding: 12px 24px;
   font-family: var(--font-display);
-  font-size: 9px;
+  font-size: 13px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0;
   cursor: pointer;
   text-decoration: none;
   box-shadow: var(--shadow-pixel-primary);
@@ -157,6 +157,12 @@ body {
 .btn-primary:hover {
   box-shadow: none;
   transform: translate(4px, 4px);
+}
+.btn-primary:disabled {
+  cursor: wait;
+  opacity: 0.75;
+  transform: none;
+  box-shadow: var(--shadow-pixel-primary);
 }
 .btn-secondary {
   display: inline-flex;
@@ -168,7 +174,8 @@ body {
   border-radius: 0;
   padding: 10px 20px;
   font-family: var(--font-display);
-  font-size: 9px;
+  font-size: 13px;
+  font-weight: 700;
   text-transform: uppercase;
   cursor: pointer;
   text-decoration: none;
@@ -181,10 +188,10 @@ body {
   transform: translate(4px, 4px);
 }
 
-/* ── Chip / Tech Tag ─────────────────────────────────────────── */
 .chip {
   font-family: var(--font-mono);
-  font-size: 18px;
+  font-size: 14px;
+  font-weight: 600;
   border-radius: 0;
   padding: 2px 10px;
   background: var(--surface-container-highest);
@@ -202,7 +209,6 @@ body {
   vertical-align: middle;
 }
 
-/* ── XP Bar ──────────────────────────────────────────────────── */
 .xp-bar-track {
   background: var(--surface-container-lowest);
   border: 2px solid var(--outline);
@@ -225,17 +231,15 @@ body {
 }
 .xp-bar-fill.animate { width: var(--xp-width, 85%); }
 
-/* ── Input Fields ────────────────────────────────────────────── */
 .pixel-input {
   background: var(--surface-container-lowest);
   border: 2px solid var(--outline);
   border-radius: 0;
   color: var(--on-surface);
   font-family: var(--font-mono);
-  font-size: 18px;
+  font-size: 16px;
   padding: 10px 14px;
   width: 100%;
-  outline: none;
   transition: border-color 0.15s, box-shadow 0.15s;
 }
 .pixel-input:focus {
@@ -246,32 +250,32 @@ body {
 .pixel-label {
   display: block;
   font-family: var(--font-mono);
-  font-size: 16px;
+  font-size: 13px;
+  font-weight: 700;
   color: var(--primary-container);
   margin-bottom: var(--space-1);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0;
 }
 
-/* ── Section Heading ─────────────────────────────────────────── */
 .section-heading {
   font-family: var(--font-display);
-  font-size: clamp(12px, 1.8vw, 18px);
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 800;
   color: var(--primary-container);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  text-transform: none;
+  letter-spacing: 0;
   margin-bottom: var(--space-8);
   display: flex;
   align-items: center;
   gap: var(--space-4);
 }
 .section-heading::before {
-  content: '>>';
+  content: '>';
   color: var(--secondary-fixed-dim);
   font-size: 0.8em;
 }
 
-/* ── CRT Scanline Overlay ────────────────────────────────────── */
 .scanline-overlay {
   position: fixed;
   inset: 0;
@@ -286,28 +290,6 @@ body {
   z-index: 9999;
 }
 
-/* ── Pixel Stars BG ──────────────────────────────────────────── */
-.stars-bg {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 0;
-}
-.star {
-  position: absolute;
-  width: 3px;
-  height: 3px;
-  background: var(--on-surface-variant);
-  animation: twinkle var(--dur, 3s) ease-in-out infinite;
-  animation-delay: var(--delay, 0s);
-}
-@keyframes twinkle {
-  0%,100% { opacity: 0.15; }
-  50%      { opacity: 0.8; }
-}
-
-/* ── Blink cursor ────────────────────────────────────────────── */
 .cursor-blink {
   animation: blink 1s step-end infinite;
 }
@@ -316,14 +298,12 @@ body {
   50%      { opacity: 0; }
 }
 
-/* ── Selection Pulse ─────────────────────────────────────────── */
 @keyframes selection-pulse {
   0%,100% { box-shadow: 0 0 6px  var(--primary-fixed-dim); }
   50%      { box-shadow: 0 0 18px var(--primary-fixed-dim); }
 }
 .pulse { animation: selection-pulse 2s ease-in-out infinite; }
 
-/* ── Fade-in on scroll ───────────────────────────────────────── */
 .reveal {
   opacity: 0;
   transform: translateY(24px);
@@ -334,18 +314,16 @@ body {
   transform: translateY(0);
 }
 
-/* ── Container ───────────────────────────────────────────────── */
 .container {
-  max-width: 1100px;
+  max-width: 1160px;
   margin: 0 auto;
   padding: 0 var(--space-6);
 }
 
-/* ── Section ─────────────────────────────────────────────────── */
 section { padding: var(--space-16) 0; }
 
-/* ── Responsive ──────────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .btn-primary, .btn-secondary { font-size: 8px; padding: 10px 16px; }
+  .btn-primary, .btn-secondary { font-size: 13px; padding: 10px 16px; }
+  .container { padding: 0 var(--space-4); }
   section { padding: var(--space-12) 0; }
 }
