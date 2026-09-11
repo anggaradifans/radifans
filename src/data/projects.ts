@@ -15,7 +15,7 @@ export const projects: Project[] = [
     title: 'E-Commerce Marketplace Platform',
     category: 'E-Commerce',
     description: 'Full-featured marketplace with modern UI, product catalog, and responsive design built with Next.js',
-    longDescription: 'A comprehensive e-commerce marketplace platform showcasing modern web development practices. Features a clean, responsive design with advanced product catalog management, search functionality, and optimized performance. Built with Next.js and TypeScript, deployed on Vercel with seamless user experience across all devices.',
+    longDescription: 'A comprehensive e-commerce marketplace platform showcasing modern web development practices. Features a clean, responsive design with advanced product catalog management, search functionality, and optimized performance. Built with Next.js and TypeScript, deployed on Vercel for use across device sizes.',
     technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Vercel', 'React'],
     liveUrl: 'https://marketplace-app-taupe.vercel.app/',
     githubUrl: 'https://github.com/anggaradifans/marketplace-app',

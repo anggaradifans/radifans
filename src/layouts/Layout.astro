@@ -8,7 +8,7 @@ export interface Props {
 }
 
 const {
-  title = 'Angga Radifan Sumarna — Senior Software Engineer | radifans.my.id',
+  title = 'Angga Radifan Sumarna | Senior Software Engineer | radifans.my.id',
   description = `Full-Stack Software Engineer with ${new Date().getFullYear() - 2019} years experience in React, Node.js, TypeScript. Building scalable fintech, healthcare, and e-commerce web applications.`,
 } = Astro.props;
 ---
@@ -46,7 +46,7 @@ const {
     <title>{title}</title>
   </head>
   <body>
-    <!-- CRT scanline overlay — always on, subtle -->
+    <!-- Subtle CRT scanline overlay for the Aether Pixel direction. -->
     <div class="scanline-overlay" aria-hidden="true"></div>
 
     <Navbar />
@@ -55,7 +55,6 @@ const {
       <slot />
     </main>
 
-    <!-- Scroll-reveal script -->
     <script>
       const observer = new IntersectionObserver(
         (entries) => {

@@ -4,64 +4,55 @@ import { experiences } from '../data/experience';
 
 <section id="quest" class="quest-section">
   <div class="container">
-    <h2 class="section-heading reveal">QUEST LOG — CAREER HISTORY</h2>
+    <h2 class="section-heading reveal">Experience</h2>
 
     <div class="timeline">
-      <!-- Rope line -->
       <div class="timeline__rope" aria-hidden="true"></div>
 
       {experiences.map((exp, i) => (
         <article class="quest-entry reveal" data-index={i}>
-          <!-- Level node -->
           <div class="quest-entry__node" aria-hidden="true">
-            <span class="font-display">L{exp.level}</span>
+            <span class="font-display">{i + 1}</span>
           </div>
 
-          <!-- Quest card -->
           <div class="quest-card pixel-card">
-            <!-- Header -->
             <div class="quest-card__header">
               <div>
                 <h3 class="quest-card__company font-display">{exp.company}</h3>
                 <p class="quest-card__meta font-mono">
-                  &gt; {exp.position} · <span class="quest-card__duration">{exp.duration}</span>
+                  {exp.position} <span class="quest-card__duration">{exp.duration}</span>
                 </p>
               </div>
               <span class="level-badge font-display">
-                LVL {exp.level}
+                {exp.duration}
               </span>
             </div>
 
-            <!-- XP Bar -->
-            <div class="xp-row" aria-label={`Experience level ${exp.level} of 3`}>
-              <span class="xp-label font-mono">XP</span>
+            <div class="xp-row" aria-label={`Timeline marker ${i + 1} of ${experiences.length}`}>
+              <span class="xp-label font-mono">Focus</span>
               <div class="xp-bar-track" role="progressbar" aria-valuenow={exp.level * 33} aria-valuemin={0} aria-valuemax={100}>
                 <div
                   class="xp-bar-fill"
                   style={`--xp-width: ${Math.round((exp.level / 3) * 100)}%`}
                 ></div>
               </div>
-              <span class="xp-pct font-mono">{Math.round((exp.level / 3) * 100)}%</span>
             </div>
 
-            <!-- Tech tags -->
             <div class="quest-card__tech">
               {exp.technologies.map((t) => (
                 <span class="chip">{t}</span>
               ))}
             </div>
 
-            <!-- Expand toggle -->
             <button
               class="quest-card__toggle font-display"
               data-target={`quest-details-${i}`}
               aria-expanded="false"
               aria-controls={`quest-details-${i}`}
             >
-              [▶ READ QUEST DETAILS]
+              Read Details
             </button>
 
-            <!-- Expandable details -->
             <div class="quest-details" id={`quest-details-${i}`} hidden>
               <ul class="quest-card__desc">
                 {exp.description.map((item) => (
@@ -79,7 +70,6 @@ import { experiences } from '../data/experience';
 <style>
   .quest-section { background: var(--surface-container-low); }
 
-  /* Timeline layout */
   .timeline {
     position: relative;
     padding-left: 48px;
@@ -101,7 +91,6 @@ import { experiences } from '../data/experience';
     );
   }
 
-  /* Entry */
   .quest-entry { position: relative; }
   .quest-entry__node {
     position: absolute;
@@ -113,11 +102,11 @@ import { experiences } from '../data/experience';
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 7px;
+    font-size: 14px;
+    font-weight: 800;
     color: var(--on-primary);
   }
 
-  /* Quest card */
   .quest-card { transition: border-color 0.2s; }
   .quest-card__header {
     display: flex;
@@ -128,16 +117,22 @@ import { experiences } from '../data/experience';
     flex-wrap: wrap;
   }
   .quest-card__company {
-    font-size: clamp(9px, 1.4vw, 14px);
+    font-size: clamp(20px, 2.2vw, 28px);
+    font-weight: 800;
     color: var(--primary-container);
     margin-bottom: var(--space-2);
     line-height: 1.6;
   }
   .quest-card__meta { font-size: 18px; color: var(--on-surface-variant); }
-  .quest-card__duration { color: var(--secondary-fixed-dim); }
+  .quest-card__duration {
+    color: var(--secondary-fixed-dim);
+    display: inline-block;
+    margin-left: var(--space-2);
+  }
 
   .level-badge {
-    font-size: 10px;
+    font-size: 13px;
+    font-weight: 800;
     color: var(--on-tertiary);
     background: var(--tertiary-container);
     padding: 4px 10px;
@@ -146,21 +141,19 @@ import { experiences } from '../data/experience';
     box-shadow: 3px 3px 0 var(--tertiary-fixed-dim);
   }
 
-  /* XP row */
   .xp-row {
     display: flex;
     align-items: center;
     gap: var(--space-3);
     margin-bottom: var(--space-4);
   }
-  .xp-label, .xp-pct {
+  .xp-label {
     font-size: 16px;
     color: var(--primary-container);
     min-width: 36px;
   }
   .xp-bar-track { flex: 1; }
 
-  /* Tech tags */
   .quest-card__tech {
     display: flex;
     flex-wrap: wrap;
@@ -168,21 +161,19 @@ import { experiences } from '../data/experience';
     margin-bottom: var(--space-4);
   }
 
-  /* Toggle button */
   .quest-card__toggle {
-    font-size: 8px;
+    font-size: 13px;
     color: var(--secondary-fixed-dim);
-    background: none;
-    border: none;
+    background: var(--surface-container-lowest);
+    border: 2px solid var(--secondary-container);
     cursor: pointer;
-    letter-spacing: 0.04em;
-    padding: 0;
+    padding: 10px 12px;
+    min-height: 44px;
     transition: color 0.15s;
   }
   .quest-card__toggle:hover { color: var(--primary-container); }
   .quest-card__toggle[aria-expanded="true"] { color: var(--primary-container); }
 
-  /* Description */
   .quest-details { margin-top: var(--space-4); }
   .quest-card__desc {
     list-style: none;
@@ -209,12 +200,14 @@ import { experiences } from '../data/experience';
 
   @media (max-width: 600px) {
     .timeline { padding-left: 36px; }
-    .quest-entry__node { left: -36px; width: 30px; height: 30px; font-size: 6px; }
+    .quest-entry__node { left: -36px; width: 30px; height: 30px; font-size: 12px; }
+    .quest-card {
+      padding: var(--space-6);
+    }
   }
 </style>
 
 <script>
-  // Expand/collapse quest details
   document.querySelectorAll<HTMLButtonElement>('.quest-card__toggle').forEach((btn) => {
     btn.addEventListener('click', () => {
       const targetId = btn.dataset.target!;
@@ -224,7 +217,7 @@ import { experiences } from '../data/experience';
       const isOpen = btn.getAttribute('aria-expanded') === 'true';
       btn.setAttribute('aria-expanded', String(!isOpen));
       detail.hidden = isOpen;
-      btn.textContent = isOpen ? '[▶ READ QUEST DETAILS]' : '[▼ CLOSE QUEST DETAILS]';
+      btn.textContent = isOpen ? 'Read Details' : 'Close Details';
     });
   });
 </script>
