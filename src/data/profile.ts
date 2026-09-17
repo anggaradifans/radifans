@@ -14,5 +14,5 @@ export const profile = {
   linkedin: 'https://www.linkedin.com/in/anggaradifans/',
   github: 'https://github.com/anggaradifans',
   email: 'anggaradifans@gmail.com',
-  site: 'https://radifans.my.id',
+  site: 'https://www.radifans.my.id',
 };

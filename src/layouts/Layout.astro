@@ -11,6 +11,10 @@ const {
   title = 'Angga Radifan Sumarna | Senior Software Engineer | radifans.my.id',
   description = `Full-Stack Software Engineer with ${new Date().getFullYear() - 2019} years experience in React, Node.js, TypeScript. Building scalable fintech, healthcare, and e-commerce web applications.`,
 } = Astro.props;
+
+// Derived from `site` in astro.config.mjs so the canonical host is defined in exactly one place.
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
+const ogImageURL = new URL('/og-image.jpg', Astro.site).href;
 ---
 
 <!doctype html>
@@ -25,17 +29,17 @@ const {
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content="https://radifans.my.id" />
-    <meta property="og:image" content="https://radifans.my.id/og-image.jpg" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImageURL} />
     <meta property="og:type" content="website" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="https://radifans.my.id/og-image.jpg" />
+    <meta name="twitter:image" content={ogImageURL} />
 
-    <link rel="canonical" href="https://radifans.my.id" />
+    <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/favicon.png" />
 
