@@ -3,7 +3,7 @@ const yearsExp = Math.floor((new Date().getTime() - startDate.getTime()) / (1000
 
 export const profile = {
   name: 'Angga Radifan Sumarna',
-  title: 'Senior Software Engineer',
+  title: 'Software Engineer',
   roles: ['Frontend', 'Backend', 'Full Stack'],
   bio: [
     `I build full-stack products across fintech, healthcare, and commerce, with ${yearsExp}+ years spent turning product requirements into reliable interfaces, APIs, and deployment paths.`,
