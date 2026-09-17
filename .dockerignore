@@ -1,0 +1,22 @@
+# Never copy host-built dependencies into the image — they are macOS/arm64
+# binaries and the container needs Linux ones.
+node_modules
+npm-debug.log*
+
+# Build artifacts
+dist
+.astro
+.vercel
+
+# VCS and local config
+.git
+.github
+.gitignore
+.env
+.env.*
+!.env.example
+
+# Editor / OS noise
+.DS_Store
+.vscode
+.idea

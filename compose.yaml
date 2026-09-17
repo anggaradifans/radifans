@@ -1,0 +1,40 @@
+services:
+  # Live dev server: http://localhost:4321
+  #   docker compose up dev
+  dev:
+    build: .
+    ports:
+      - "4321:4321"
+    environment:
+      # Bind-mounted files do not emit FS events into the container on
+      # macOS/Windows, so the watcher has to poll to see host edits.
+      - WATCH_POLLING=true
+    volumes:
+      # Source is bind-mounted so edits on the host are picked up live.
+      - .:/app
+      # Anonymous volume keeps the container's Linux-built node_modules from
+      # being shadowed by the host directory above.
+      - /app/node_modules
+    command: npm run dev -- --host 0.0.0.0
+
+  # One-off production build, writing dist/ back to the host:
+  #   docker compose run --rm build
+  build:
+    build: .
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run build
+    profiles: ["tools"]
+
+  # Serve the built output to check it before pushing: http://localhost:4322
+  #   docker compose run --rm --service-ports preview
+  preview:
+    build: .
+    ports:
+      - "4322:4322"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run preview -- --host 0.0.0.0 --port 4322
+    profiles: ["tools"]
