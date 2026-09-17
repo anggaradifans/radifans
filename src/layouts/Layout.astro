@@ -14,7 +14,7 @@ const {
 
 // Derived from `site` in astro.config.mjs so the canonical host is defined in exactly one place.
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
-const ogImageURL = new URL('/og-image.jpg', Astro.site).href;
+const ogImageURL = new URL('/og-image.png', Astro.site).href;
 ---
 
 <!doctype html>
@@ -31,6 +31,9 @@ const ogImageURL = new URL('/og-image.jpg', Astro.site).href;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${title} — portfolio preview card`} />
     <meta property="og:type" content="website" />
 
     <!-- Twitter -->
@@ -38,6 +41,7 @@ const ogImageURL = new URL('/og-image.jpg', Astro.site).href;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
+    <meta name="twitter:image:alt" content={`${title} — portfolio preview card`} />
 
     <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/png" href="/favicon.png" />

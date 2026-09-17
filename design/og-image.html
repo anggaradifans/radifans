@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --background:#11131e;
+    --surface-container:#1d1f2b;
+    --surface-container-lowest:#0c0e18;
+    --surface-container-highest:#323440;
+    --on-surface:#e1e1f2;
+    --on-surface-variant:#bacbbe;
+    --outline:#859589;
+    --primary-container:#4fffb0;
+    --primary-fixed-dim:#1de296;
+    --tertiary-container:#ffe16c;
+    --tertiary-fixed-dim:#e9c400;
+    --on-tertiary:#3a3000;
+    --font:'Outfit',ui-sans-serif,system-ui,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1200px;height:630px}
+  body{
+    background:var(--background);
+    font-family:var(--font);
+    display:flex;align-items:center;justify-content:center;
+    position:relative;overflow:hidden;
+  }
+  /* Ambient mint glow, echoing the site's cathode-ray treatment */
+  .glow{
+    position:absolute;width:760px;height:760px;border-radius:50%;
+    background:radial-gradient(circle,rgba(79,255,176,.13) 0%,rgba(79,255,176,0) 66%);
+    top:-260px;left:-200px;
+  }
+  .glow2{
+    position:absolute;width:640px;height:640px;border-radius:50%;
+    background:radial-gradient(circle,rgba(191,90,242,.11) 0%,rgba(191,90,242,0) 66%);
+    bottom:-250px;right:-180px;
+  }
+  .panel{
+    position:relative;
+    width:1104px;height:534px;
+    background:var(--surface-container);
+    border:6px solid var(--primary-container);
+    outline:3px solid var(--surface-container-highest);
+    outline-offset:-11px;
+    box-shadow:12px 12px 0 var(--primary-fixed-dim);
+    padding:54px 60px;
+    display:flex;flex-direction:column;justify-content:space-between;
+  }
+  .row{display:flex;align-items:flex-start;justify-content:space-between;gap:32px}
+  .name{
+    font-size:78px;font-weight:800;line-height:1.02;
+    color:var(--on-surface);letter-spacing:-1.5px;
+  }
+  .badge{
+    flex-shrink:0;
+    font-size:26px;font-weight:800;letter-spacing:.5px;
+    color:var(--on-tertiary);background:var(--tertiary-container);
+    border:3px solid var(--tertiary-fixed-dim);
+    box-shadow:5px 5px 0 var(--tertiary-fixed-dim);
+    padding:9px 20px;white-space:nowrap;
+  }
+  .role{
+    font-size:40px;font-weight:600;color:var(--primary-container);
+    margin-top:22px;letter-spacing:-.3px;
+  }
+  .xp{display:flex;align-items:center;gap:18px;margin-top:6px}
+  .xp-label{font-size:21px;font-weight:700;color:var(--primary-container);letter-spacing:1px}
+  .xp-track{
+    flex:1;height:22px;background:var(--surface-container-lowest);
+    border:3px solid var(--outline);overflow:hidden;
+  }
+  .xp-fill{
+    height:100%;width:78%;background:var(--primary-container);
+    background-image:repeating-linear-gradient(90deg,transparent,transparent 18px,rgba(0,0,0,.25) 18px,rgba(0,0,0,.25) 20px);
+  }
+  .xp-years{font-size:21px;font-weight:700;color:var(--on-surface-variant);white-space:nowrap}
+  .chips{display:flex;flex-wrap:wrap;gap:12px}
+  .chip{
+    font-size:22px;font-weight:600;padding:6px 16px;
+    background:var(--surface-container-highest);color:var(--on-surface-variant);
+    line-height:1.4;
+  }
+  .foot{display:flex;align-items:center;justify-content:space-between}
+  .site{font-size:26px;font-weight:700;color:var(--on-surface);letter-spacing:.5px}
+  .cursor{color:var(--primary-container)}
+  /* CRT scanlines, same 2px/4px cadence as the site overlay */
+  .scan{
+    position:absolute;inset:0;pointer-events:none;
+    background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.04) 2px,rgba(0,0,0,.04) 4px);
+  }
+</style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="glow2"></div>
+
+  <div class="panel">
+    <div>
+      <div class="row">
+        <div class="name">ANGGA RADIFAN<br>SUMARNA</div>
+        <div class="badge">LV. 7</div>
+      </div>
+      <div class="role">Full-Stack Software Engineer</div>
+    </div>
+
+    <div class="xp">
+      <span class="xp-label">XP</span>
+      <div class="xp-track"><div class="xp-fill"></div></div>
+      <span class="xp-years">7+ YEARS</span>
+    </div>
+
+    <div class="foot">
+      <div class="chips">
+        <span class="chip">Node.js</span>
+        <span class="chip">Java</span>
+        <span class="chip">Golang</span>
+        <span class="chip">React</span>
+        <span class="chip">TypeScript</span>
+      </div>
+      <div class="site">radifans.my.id<span class="cursor">_</span></div>
+    </div>
+  </div>
+
+  <div class="scan"></div>
+</body>
+</html>
