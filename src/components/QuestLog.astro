@@ -1,5 +1,7 @@
 ---
 import { experiences } from '../data/experience';
+
+const maxLevel = Math.max(...experiences.map((e) => e.level));
 ---
 
 <section id="quest" class="quest-section">
@@ -30,10 +32,10 @@ import { experiences } from '../data/experience';
 
             <div class="xp-row" aria-label={`Timeline marker ${i + 1} of ${experiences.length}`}>
               <span class="xp-label font-mono">Focus</span>
-              <div class="xp-bar-track" role="progressbar" aria-valuenow={exp.level * 33} aria-valuemin={0} aria-valuemax={100}>
+              <div class="xp-bar-track" role="progressbar" aria-valuenow={Math.round((exp.level / maxLevel) * 100)} aria-valuemin={0} aria-valuemax={100}>
                 <div
                   class="xp-bar-fill"
-                  style={`--xp-width: ${Math.round((exp.level / 3) * 100)}%`}
+                  style={`--xp-width: ${Math.round((exp.level / maxLevel) * 100)}%`}
                 ></div>
               </div>
             </div>
