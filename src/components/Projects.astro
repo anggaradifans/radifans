@@ -2,7 +2,6 @@
 import { projects } from '../data/projects';
 
 const categoryColors: Record<string, string> = {
-  'E-Commerce': '#4fffb0',
   'FinTech':    '#bf5af2',
   'Full-Stack': '#ffd700',
 };
@@ -43,15 +42,24 @@ const categoryColors: Record<string, string> = {
                   Live Demo
                 </a>
               )}
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="btn-secondary"
-                aria-label={`Source code of ${project.title}`}
-              >
-                Source Code
-              </a>
+              {project.githubUrl ? (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-secondary"
+                  aria-label={`Source code of ${project.title}`}
+                >
+                  Source Code
+                </a>
+              ) : project.repositoryVisibility === 'private' ? (
+                <span
+                  class="repository-status font-display"
+                  title="The source code is not publicly available"
+                >
+                  Private Repository
+                </span>
+              ) : null}
             </div>
 
             <button
@@ -148,6 +156,19 @@ const categoryColors: Record<string, string> = {
     margin-bottom: var(--space-4);
   }
 
+  .repository-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    border: 4px solid var(--surface-container-highest);
+    color: var(--on-surface-variant);
+    background: var(--surface-container-lowest);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
   .achievement-card__toggle {
     font-size: 13px;
     color: var(--secondary-fixed-dim);
@@ -168,6 +189,9 @@ const categoryColors: Record<string, string> = {
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
+  }
+  .project-details[hidden] {
+    display: none;
   }
   .project-details__long {
     font-size: 14px;
@@ -205,6 +229,7 @@ const categoryColors: Record<string, string> = {
       padding: var(--space-6);
     }
     .achievement-card__links a,
+    .repository-status,
     .achievement-card__toggle {
       width: 100%;
       justify-content: center;

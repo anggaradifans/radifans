@@ -1,58 +1,59 @@
 export interface Project {
   title: string;
-  category: 'E-Commerce' | 'FinTech' | 'Full-Stack';
+  category: 'FinTech' | 'Full-Stack';
   description: string;
   longDescription: string;
   technologies: string[];
   liveUrl?: string;
-  githubUrl: string;
+  githubUrl?: string;
+  repositoryVisibility?: 'public' | 'private';
   features: string[];
   highlights: string[];
 }
 
 export const projects: Project[] = [
   {
-    title: 'E-Commerce Marketplace Platform',
-    category: 'E-Commerce',
-    description: 'Full-featured marketplace with modern UI, product catalog, and responsive design built with Next.js',
-    longDescription: 'A comprehensive e-commerce marketplace platform showcasing modern web development practices. Features a clean, responsive design with advanced product catalog management, search functionality, and optimized performance. Built with Next.js and TypeScript, deployed on Vercel for use across device sizes.',
-    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Vercel', 'React'],
-    liveUrl: 'https://marketplace-app-taupe.vercel.app/',
-    githubUrl: 'https://github.com/anggaradifans/marketplace-app',
+    title: 'Tilaka Tournament Generator',
+    category: 'Full-Stack',
+    description: 'Tournament manager for publishing group standings, match results, knockout brackets, and team rosters',
+    longDescription: 'A full-stack tournament application built for the Tilaka office competition. It gives players a public place to follow tournament progress, recent results, group standings, the knockout bracket, participating teams, and the final champion. A separate admin area keeps tournament operations away from the public views.',
+    technologies: ['Next.js', 'React', 'Tailwind CSS'],
+    liveUrl: 'https://tnt-cup.kangoprek.my.id/',
+    repositoryVisibility: 'private',
     features: [
-      'Modern responsive design with Tailwind CSS',
-      'Product catalog with advanced filtering',
-      'Search functionality with real-time results',
-      'Optimized performance and SEO',
-      'Mobile-first responsive design',
-      'Clean, intuitive user interface',
+      'Public tournament overview with status and champion',
+      'Group standings',
+      'Match schedule and results',
+      'Knockout bracket',
+      'Team roster pages',
+      'Separate admin area',
     ],
     highlights: [
-      'Production-ready deployment on Vercel',
-      'TypeScript for type safety',
-      'Modern React patterns and hooks',
+      'Used for a completed Tilaka office tournament',
+      'One public view for the full tournament progress',
+      'Production code maintained in a private repository',
     ],
   },
   {
     title: 'Telegram Financial Tracker',
     category: 'FinTech',
-    description: 'Innovative personal finance logger using Telegram bot integration with Supabase backend and natural language processing',
-    longDescription: 'A creative financial tracking solution that transforms how users log their expenses and income. Uses Telegram bot for natural language input processing, automatically parsing transaction details and storing them in Supabase. Features timezone-aware logging, automated categorization, and real-time database integration with comprehensive error handling.',
-    technologies: ['TypeScript', 'Supabase', 'Telegram Bot API', 'PostgreSQL', 'Edge Functions', 'Deno'],
+    description: 'Personal finance logger that processes routed transaction emails and lets me approve or reject each transaction from Telegram',
+    longDescription: 'An automated finance workflow that handles transactions from Telegram messages and incoming emails. Cloudflare Email Routing forwards transaction emails to a Worker, which detects the transaction, passes its data to Supabase, and sends an approval request through a Telegram webhook. I can approve or reject the transaction directly from Telegram.',
+    technologies: ['TypeScript', 'Cloudflare Workers', 'Cloudflare Email Routing', 'Supabase', 'Telegram Bot API', 'PostgreSQL', 'Edge Functions', 'Deno'],
     githubUrl: 'https://github.com/anggaradifans/supabase-telegram-webhook',
     features: [
       'Natural language transaction parsing',
-      'Real-time Supabase database integration',
+      'Transaction email detection through Cloudflare Email Routing',
+      'Email processing with Cloudflare Workers',
+      'Supabase transaction storage',
+      'Approve or reject transactions from Telegram',
       'Timezone-aware logging (Asia/Jakarta)',
-      'Automated webhook management',
       'Category and account auto-creation',
-      'Secure bot token authentication',
-      'Comprehensive error handling and logging',
     ],
     highlights: [
-      'Innovative use of Telegram as UI interface',
-      'Complex timezone handling and parsing logic',
-      'Production-ready webhook integration',
+      'Email-to-database workflow with Telegram confirmation',
+      'Human approval step for automatically detected transactions',
+      'Telegram interface for transaction entry and review',
     ],
   },
   {
