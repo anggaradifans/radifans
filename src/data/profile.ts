@@ -10,7 +10,7 @@ export const profile = {
     'My recent work spans marketplace search flows, Telegram-based finance logging, Supabase integrations, and production dashboards in React, Node.js, Java, and TypeScript.',
     'The through-line is practical engineering with a playful interface sensibility: systems that hold up, screens that feel considered, and code that teams can keep extending.',
   ],
-  cv: '/documents/Angga-Radifan-Sumarna-CV.pdf',
+  cv: 'https://assets.radifans.my.id/Angga-Radifan-Sumarna-CV.pdf',
   linkedin: 'https://www.linkedin.com/in/anggaradifans/',
   github: 'https://github.com/anggaradifans',
   email: 'anggaradifans@gmail.com',

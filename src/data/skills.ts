@@ -36,6 +36,7 @@ export const skills: Skill[] = [
 
   // DevOps
   { name: 'Docker', category: 'DevOps', icon: 'logos:docker-icon', color: '#2496ED' },
+  { name: 'Cloudflare Workers', category: 'DevOps', icon: 'logos:cloudflare-workers-icon', color: '#F38020' },
 
   // Tools
   { name: 'Git', category: 'Tools', icon: 'logos:git-icon', color: '#F05032' },
