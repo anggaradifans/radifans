@@ -1,7 +1,5 @@
 ---
 import { experiences } from '../data/experience';
-
-const maxLevel = Math.max(...experiences.map((e) => e.level));
 ---
 
 <section id="quest" class="quest-section">
@@ -24,21 +22,11 @@ const maxLevel = Math.max(...experiences.map((e) => e.level));
                 <p class="quest-card__meta font-mono">
                   {exp.position} <span class="quest-card__duration">{exp.duration}</span>
                 </p>
+                <p class="quest-card__overview">{exp.overview}</p>
               </div>
-              <span class="level-badge font-display">
-                {exp.duration}
-              </span>
             </div>
 
-            <div class="xp-row" aria-label={`Timeline marker ${i + 1} of ${experiences.length}`}>
-              <span class="xp-label font-mono">Focus</span>
-              <div class="xp-bar-track" role="progressbar" aria-valuenow={Math.round((exp.level / maxLevel) * 100)} aria-valuemin={0} aria-valuemax={100}>
-                <div
-                  class="xp-bar-fill"
-                  style={`--xp-width: ${Math.round((exp.level / maxLevel) * 100)}%`}
-                ></div>
-              </div>
-            </div>
+            <p class="quest-card__summary font-mono">Role {i + 1} of {experiences.length}</p>
 
             <div class="quest-card__tech">
               {exp.technologies.map((t) => (
@@ -131,30 +119,19 @@ const maxLevel = Math.max(...experiences.map((e) => e.level));
     display: inline-block;
     margin-left: var(--space-2);
   }
-
-  .level-badge {
-    font-size: 13px;
-    font-weight: 800;
-    color: var(--on-tertiary);
-    background: var(--tertiary-container);
-    padding: 4px 10px;
-    border: 2px solid var(--tertiary-fixed-dim);
-    white-space: nowrap;
-    box-shadow: 3px 3px 0 var(--tertiary-fixed-dim);
+  .quest-card__overview {
+    max-width: 62ch;
+    margin-top: var(--space-3);
+    color: var(--on-surface-variant);
+    font-size: 14px;
+    line-height: 1.55;
   }
 
-  .xp-row {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
+  .quest-card__summary {
+    color: var(--on-surface-variant);
+    font-size: 13px;
     margin-bottom: var(--space-4);
   }
-  .xp-label {
-    font-size: 16px;
-    color: var(--primary-container);
-    min-width: 36px;
-  }
-  .xp-bar-track { flex: 1; }
 
   .quest-card__tech {
     display: flex;

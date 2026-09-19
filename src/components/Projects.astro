@@ -9,20 +9,69 @@ const categoryColors: Record<string, string> = {
 
 <section id="projects">
   <div class="container">
-    <h2 class="section-heading reveal">Selected Builds</h2>
+    <h2 class="section-heading reveal">Selected Work</h2>
 
     <div class="projects-grid">
       {projects.map((project, i) => {
         const color = categoryColors[project.category] ?? '#4fffb0';
         return (
-          <article class="achievement-card pixel-card reveal" style={`--cat-color: ${color}`}>
+          <article class={`achievement-card pixel-card reveal achievement-card--${i + 1}`} style={`--cat-color: ${color}`}>
             <div class="achievement-card__banner">
               <span class="achievement-card__cat font-mono">{project.category}</span>
+              <span class="achievement-card__index font-mono">Case study {String(i + 1).padStart(2, '0')}</span>
             </div>
 
             <h3 class="achievement-card__title font-display">{project.title}</h3>
 
+            {project.screenshots && (
+              <div class={`project-gallery project-gallery--${project.galleryLayout ?? 'feature'}`} aria-label={`${project.title} product screenshots`}>
+                {project.screenshots.map((screenshot, screenshotIndex) => (
+                  <figure class={`project-gallery__item project-gallery__item--${screenshotIndex + 1}`}>
+                    <button type="button" data-lightbox-src={screenshot.src} data-lightbox-alt={screenshot.alt} aria-label={`Expand ${screenshot.label} screenshot`}>
+                      <img src={screenshot.src} alt={screenshot.alt} loading="lazy" decoding="async" />
+                      <span class="project-gallery__label font-mono">{screenshot.label}</span>
+                    </button>
+                  </figure>
+                ))}
+              </div>
+            )}
+
+            {project.workflow && (
+              <div class="project-workflow" aria-label={`${project.title} workflow`}>
+                <div class="project-workflow__heading">
+                  <span class="font-mono">System trace</span>
+                  <strong>From notification to confirmed record</strong>
+                </div>
+                <ol class="project-workflow__steps">
+                  {project.workflow.map((step, stepIndex) => (
+                    <li class={`project-workflow__step project-workflow__step--${stepIndex + 1}`}>
+                      <span class="project-workflow__number font-mono">{String(stepIndex + 1).padStart(2, '0')}</span>
+                      <strong>{step.label}</strong>
+                      <span>{step.detail}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
+
+            {project.workflowProof && (
+              <figure class="workflow-proof">
+                <div class="workflow-proof__image-wrap">
+                  <img src={project.workflowProof.src} alt={project.workflowProof.alt} loading="lazy" decoding="async" />
+                </div>
+                <figcaption class="workflow-proof__caption">
+                  <span class="font-mono">{project.workflowProof.eyebrow}</span>
+                  <strong>{project.workflowProof.title}</strong>
+                  <p>{project.workflowProof.description}</p>
+                </figcaption>
+              </figure>
+            )}
+
             <p class="achievement-card__desc">{project.description}</p>
+
+            <div class="achievement-card__signal" aria-label="Project focus">
+              <span class="font-mono">{project.signal}</span>
+            </div>
 
             <div class="achievement-card__tech">
               {project.technologies.map((t) => (
@@ -39,7 +88,7 @@ const categoryColors: Record<string, string> = {
                   class="btn-primary"
                   aria-label={`Live demo of ${project.title}`}
                 >
-                  Live Demo
+                  {project.liveLabel ?? 'Open live demo'}
                 </a>
               )}
               {project.githubUrl ? (
@@ -50,7 +99,7 @@ const categoryColors: Record<string, string> = {
                   class="btn-secondary"
                   aria-label={`Source code of ${project.title}`}
                 >
-                  Source Code
+                  View source
                 </a>
               ) : project.repositoryVisibility === 'private' ? (
                 <span
@@ -93,6 +142,10 @@ const categoryColors: Record<string, string> = {
       })}
     </div>
   </div>
+  <dialog class="project-lightbox" id="projectLightbox" aria-label="Expanded project screenshot">
+    <button class="project-lightbox__close" type="button" aria-label="Close expanded screenshot">Close</button>
+    <img id="projectLightboxImage" src="" alt="" />
+  </dialog>
 </section>
 
 <style>
@@ -120,6 +173,11 @@ const categoryColors: Record<string, string> = {
     padding-bottom: var(--space-3);
     border-bottom: 2px solid var(--outline-variant);
   }
+  .achievement-card__index {
+    color: var(--on-surface-variant);
+    font-size: 12px;
+    text-transform: uppercase;
+  }
   .achievement-card__cat {
     font-size: 14px;
     font-weight: 800;
@@ -141,6 +199,195 @@ const categoryColors: Record<string, string> = {
     line-height: 1.7;
     margin-bottom: var(--space-4);
   }
+  .project-gallery {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(170px, 0.85fr);
+    grid-template-rows: repeat(3, minmax(92px, 1fr));
+    gap: var(--space-3);
+    margin: 0 0 var(--space-6);
+    min-height: 330px;
+  }
+  .project-gallery__item {
+    position: relative;
+    overflow: hidden;
+    background: var(--surface-container-lowest);
+    border: 2px solid var(--outline-variant);
+  }
+  .project-gallery__item button {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    background: none;
+    border: 0;
+    cursor: zoom-in;
+  }
+  .project-gallery__item--1 { grid-row: span 3; }
+  .project-gallery--mosaic {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(150px, 1fr));
+    min-height: 360px;
+  }
+  .project-gallery--mosaic .project-gallery__item--1 { grid-row: auto; }
+  .project-gallery__item img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    opacity: 0.9;
+    transition: opacity 0.2s ease, transform 0.25s ease;
+  }
+  .project-gallery__item:hover img { opacity: 1; transform: scale(1.025); }
+  .project-gallery__label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 5px 8px;
+    background: rgba(12, 14, 24, 0.9);
+    border-top: 2px solid var(--cat-color, var(--primary-container));
+    border-right: 2px solid var(--cat-color, var(--primary-container));
+    color: var(--on-surface);
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+  .project-lightbox {
+    width: min(1100px, calc(100vw - 32px));
+    max-height: calc(100dvh - 32px);
+    padding: var(--space-4);
+    background: var(--surface-container-lowest);
+    border: 2px solid var(--primary-container);
+  }
+  .project-lightbox::backdrop { background: rgba(0, 0, 0, 0.78); }
+  .project-lightbox img { display: block; width: 100%; max-height: calc(100dvh - 100px); object-fit: contain; }
+  .project-lightbox__close {
+    display: block;
+    margin: 0 0 var(--space-3) auto;
+    padding: 8px 12px;
+    color: var(--on-surface);
+    background: var(--surface-container-high);
+    border: 2px solid var(--outline);
+    cursor: pointer;
+  }
+  .project-workflow {
+    margin: 0 0 var(--space-6);
+    padding: var(--space-6);
+    background: var(--surface-container-lowest);
+    border: 2px solid var(--outline-variant);
+    overflow-x: auto;
+  }
+  .project-workflow__heading {
+    display: grid;
+    gap: var(--space-1);
+    margin-bottom: var(--space-6);
+  }
+  .project-workflow__heading span {
+    color: var(--secondary-fixed-dim);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .project-workflow__heading strong {
+    color: var(--on-surface);
+    font-size: 18px;
+  }
+  .project-workflow__steps {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: var(--space-3);
+    list-style: none;
+    min-width: 720px;
+  }
+  .project-workflow__step {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: var(--space-2);
+    min-height: 130px;
+    padding: var(--space-3);
+    background: var(--surface-container);
+    border: 2px solid var(--outline-variant);
+  }
+  .project-workflow__step:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    right: calc(var(--space-3) / -1 - 8px);
+    color: var(--primary-container);
+    font-size: 18px;
+    line-height: 1;
+    transform: translateY(-50%);
+  }
+  .project-workflow__number {
+    color: var(--primary-container);
+    font-size: 12px;
+  }
+  .project-workflow__step strong {
+    color: var(--on-surface);
+    font-size: 14px;
+    line-height: 1.3;
+  }
+  .project-workflow__step > span:last-child {
+    color: var(--on-surface-variant);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .workflow-proof {
+    display: grid;
+    grid-template-columns: minmax(220px, 0.85fr) minmax(0, 1fr);
+    gap: var(--space-6);
+    align-items: center;
+    margin: 0 0 var(--space-6);
+    padding: var(--space-4);
+    background: var(--surface-container-low);
+    border: 2px solid var(--primary-fixed-dim);
+  }
+  .workflow-proof__image-wrap {
+    max-height: 330px;
+    overflow: hidden;
+    background: var(--surface-container-lowest);
+    border: 2px solid var(--outline-variant);
+  }
+  .workflow-proof__image-wrap img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top left;
+  }
+  .workflow-proof__caption {
+    display: grid;
+    gap: var(--space-3);
+  }
+  .workflow-proof__caption span {
+    color: var(--primary-container);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .workflow-proof__caption strong {
+    color: var(--on-surface);
+    font-size: clamp(18px, 2vw, 24px);
+    line-height: 1.25;
+  }
+  .workflow-proof__caption p {
+    color: var(--on-surface-variant);
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .achievement-card__signal {
+    display: inline-flex;
+    align-items: center;
+    color: var(--on-surface);
+    font-size: 13px;
+    margin: 0 0 var(--space-4);
+    padding: 6px 8px;
+    background: color-mix(in srgb, var(--cat-color, #4fffb0) 11%, var(--surface-container-lowest));
+    border-left: 3px solid var(--cat-color, var(--primary-container));
+  }
+  .achievement-card--2 { margin-left: var(--space-12); }
+  .achievement-card--3 { margin-right: var(--space-12); }
 
   .achievement-card__tech {
     display: flex;
@@ -225,6 +472,25 @@ const categoryColors: Record<string, string> = {
     line-height: 1.3;
   }
   @media (max-width: 560px) {
+    .achievement-card--2, .achievement-card--3 { margin-inline: 0; }
+    .project-gallery {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: none;
+      min-height: 0;
+    }
+    .project-gallery__item { aspect-ratio: 1.35; }
+    .project-gallery__item--1 { grid-column: span 2; grid-row: auto; aspect-ratio: 1.7; }
+    .project-gallery--mosaic .project-gallery__item--1 { grid-column: auto; aspect-ratio: 1.35; }
+    .project-workflow { padding: var(--space-4); }
+    .project-workflow__steps { grid-template-columns: 1fr; min-width: 0; }
+    .project-workflow__step { min-height: 0; padding-right: var(--space-8); }
+    .project-workflow__step:not(:last-child)::after {
+      top: auto;
+      right: var(--space-4);
+      bottom: -20px;
+      transform: rotate(90deg);
+    }
+    .workflow-proof { grid-template-columns: 1fr; gap: var(--space-4); }
     .achievement-card {
       padding: var(--space-6);
     }
@@ -249,5 +515,19 @@ const categoryColors: Record<string, string> = {
       detail.hidden = isOpen;
       btn.textContent = isOpen ? 'View Details' : 'Close Details';
     });
+  });
+
+  const lightbox = document.getElementById('projectLightbox') as HTMLDialogElement;
+  const lightboxImage = document.getElementById('projectLightboxImage') as HTMLImageElement;
+  document.querySelectorAll<HTMLButtonElement>('[data-lightbox-src]').forEach((button) => {
+    button.addEventListener('click', () => {
+      lightboxImage.src = button.dataset.lightboxSrc!;
+      lightboxImage.alt = button.dataset.lightboxAlt || '';
+      lightbox.showModal();
+    });
+  });
+  lightbox.querySelector<HTMLButtonElement>('.project-lightbox__close')?.addEventListener('click', () => lightbox.close());
+  lightbox.addEventListener('click', (event) => {
+    if (event.target === lightbox) lightbox.close();
   });
 </script>
