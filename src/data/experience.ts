@@ -2,6 +2,7 @@ export interface Experience {
   company: string;
   position: string;
   duration: string;
+  overview: string;
   level: number;
   description: string[];
   technologies: string[];
@@ -12,6 +13,7 @@ export const experiences: Experience[] = [
     company: 'Tilaka Nusa Teknologi',
     position: 'Software Engineer',
     duration: 'July 2022 – Present',
+    overview: 'Building digital trust infrastructure for identity verification, electronic signatures, and compliance workflows.',
     level: 4,
     description: [
       'Built scalable backend microservices with Node.js, Java-based frameworks (Spring Boot, Primefaces, Dropwizard), and Golang to handle high-concurrency workloads.',
@@ -27,6 +29,7 @@ export const experiences: Experience[] = [
     company: 'Tilaka Nusa Teknologi',
     position: 'Frontend Developer (Freelance)',
     duration: 'December 2021 – July 2022',
+    overview: 'Building digital trust infrastructure for identity verification, electronic signatures, and compliance workflows.',
     level: 3,
     description: [
       'Built dashboard applications with Nuxt.js, turning design mockups into responsive, reusable components.',
@@ -39,6 +42,7 @@ export const experiences: Experience[] = [
     company: 'Arogya Mitra Sejati',
     position: 'Software Engineer',
     duration: 'April 2020 – June 2022',
+    overview: 'Building AI-enabled healthcare supply-chain and hospital operations tools.',
     level: 2,
     description: [
       'Developed and maintained high-performance front-end components using Vue.js and Nuxt.js, ensuring responsiveness and scalability.',
@@ -51,6 +55,7 @@ export const experiences: Experience[] = [
     company: 'Modana',
     position: 'Back End Developer',
     duration: 'August 2019 – April 2020',
+    overview: 'Building HR, payroll, and lending tools that connect businesses with employees.',
     level: 1,
     description: [
       'Engineered backend services for a fintech startup.',

@@ -6,7 +6,7 @@ export const profile = {
   title: 'Software Engineer',
   roles: ['Frontend', 'Backend', 'Full Stack'],
   bio: [
-    `I build full-stack products across fintech, healthcare, and commerce, with ${yearsExp}+ years spent turning product requirements into reliable interfaces, APIs, and deployment paths.`,
+    `I build full-stack products for digital trust, healthcare operations, and financial workflows, with ${yearsExp}+ years spent turning complex requirements into reliable interfaces, APIs, and deployment paths.`,
     'My recent work spans marketplace search flows, Telegram-based finance logging, Supabase integrations, and production dashboards in React, Node.js, Java, and TypeScript.',
     'The through-line is practical engineering with a playful interface sensibility: systems that hold up, screens that feel considered, and code that teams can keep extending.',
   ],

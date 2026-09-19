@@ -9,7 +9,7 @@ import { profile } from '../data/profile';
         <div class="hero__terminal">
           <span>Work snapshot</span>
           <strong>React / Node / Java</strong>
-          <span>Fintech, health, commerce</span>
+          <span>Trust, health, finance</span>
         </div>
       </div>
       <div class="hero__badges">
@@ -20,8 +20,9 @@ import { profile } from '../data/profile';
     </div>
 
     <div class="hero__stat-card reveal">
-      <div class="dialog-box">
-        <div class="dialog-box__header">
+        <div class="dialog-box">
+          <p class="hero__eyebrow font-mono">Software engineer · Full-stack product work</p>
+          <div class="dialog-box__header">
           <h1 class="dialog-box__name font-display">{profile.name}</h1>
           <p class="dialog-box__title font-mono">{profile.title}</p>
         </div>
@@ -32,9 +33,9 @@ import { profile } from '../data/profile';
           ))}
         </div>
 
-        <div class="hero__actions">
+          <div class="hero__actions">
           <a href={profile.cv} target="_blank" rel="noopener noreferrer" class="btn-primary" aria-label="View CV">
-            View CV
+            Download CV
           </a>
           <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" class="btn-secondary" aria-label="LinkedIn profile">
             LinkedIn
@@ -42,11 +43,22 @@ import { profile } from '../data/profile';
           <a href={profile.github} target="_blank" rel="noopener noreferrer" class="btn-secondary" aria-label="GitHub profile">
             GitHub
           </a>
-          <a href="#contact" class="btn-primary" aria-label="Contact me">
-            Send Message
+          <a href="#contact" class="btn-secondary hero__contact-link" aria-label="Contact me">
+            Get in touch
           </a>
+          </div>
+
+          <div class="hero__proof" aria-label="Engineering focus">
+            <div class="hero__proof-item">
+              <span class="hero__proof-label font-mono">Builds for</span>
+              <strong>Digital trust · Health · Finance</strong>
+            </div>
+            <div class="hero__proof-item">
+              <span class="hero__proof-label font-mono">Works across</span>
+              <strong>Interface · API · Operations</strong>
+            </div>
+          </div>
         </div>
-      </div>
     </div>
   </div>
 </section>
@@ -92,10 +104,10 @@ import { profile } from '../data/profile';
     aspect-ratio: 0.78;
     background: 
       linear-gradient(180deg, rgba(12, 14, 24, 0.12), rgba(12, 14, 24, 0.76)),
-      url('/images/gaming-room.png') center/cover no-repeat;
-    border: 4px solid var(--outline);
-    outline: 2px solid var(--primary-container);
-    outline-offset: -10px;
+      url('/images/gaming-room.webp') center/cover no-repeat;
+    border: 2px solid var(--outline);
+    outline: 1px solid var(--primary-container);
+    outline-offset: -8px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -150,15 +162,20 @@ import { profile } from '../data/profile';
 
   .dialog-box {
     background: var(--surface-container);
-    border: 4px solid var(--outline);
-    outline: 2px solid var(--surface-container-highest);
-    outline-offset: -6px;
+    border: 2px solid var(--outline);
     padding: var(--space-8);
     position: relative;
   }
   .dialog-box__header { margin-bottom: var(--space-6); }
+  .hero__eyebrow {
+    color: var(--tertiary-fixed);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    margin-bottom: var(--space-4);
+    text-transform: uppercase;
+  }
   .dialog-box__name {
-    font-size: clamp(16px, 3.4vw, 42px);
+    font-size: clamp(28px, 3.4vw, 42px);
     color: var(--primary-container);
     margin-bottom: var(--space-3);
     line-height: 1.35;
@@ -181,6 +198,29 @@ import { profile } from '../data/profile';
     gap: var(--space-3);
     margin-top: var(--space-6);
   }
+  .hero__contact-link { border-width: 2px; padding: 11px 20px; }
+  .hero__proof {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+    margin-top: var(--space-8);
+    padding-top: var(--space-6);
+    border-top: 2px solid var(--outline-variant);
+  }
+  .hero__proof-item {
+    display: grid;
+    gap: var(--space-1);
+  }
+  .hero__proof-label {
+    color: var(--secondary-fixed-dim);
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+  .hero__proof-item strong {
+    color: var(--on-surface);
+    font-size: 14px;
+    line-height: 1.4;
+  }
 
   @media (max-width: 900px) {
     .hero__inner {
@@ -189,6 +229,7 @@ import { profile } from '../data/profile';
     }
     .hero__visual { align-items: center; }
     .hero__actions { justify-content: center; }
+    .hero__proof { text-align: left; }
   }
   @media (max-width: 520px) {
     .hero {
@@ -203,6 +244,7 @@ import { profile } from '../data/profile';
       justify-content: center;
       min-height: 44px;
     }
+    .hero__proof { grid-template-columns: 1fr; }
   }
 </style>
 

@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
+import { profile } from '../data/profile';
 
 export interface Props {
   title?: string;
@@ -15,6 +16,7 @@ const {
 // Derived from `site` in astro.config.mjs so the canonical host is defined in exactly one place.
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
 const ogImageURL = new URL('/og-image.png', Astro.site).href;
+const year = new Date().getFullYear();
 ---
 
 <!doctype html>
@@ -53,6 +55,7 @@ const ogImageURL = new URL('/og-image.png', Astro.site).href;
     <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="preload" as="image" href="/images/gaming-room.webp" fetchpriority="high" />
 
     <!-- Preconnect for fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -73,6 +76,12 @@ const ogImageURL = new URL('/og-image.png', Astro.site).href;
     <main>
       <slot />
     </main>
+    <footer class="site-footer">
+      <div class="container site-footer__inner">
+        <p><span class="font-mono">{profile.name}</span> · Software engineer building considered product systems.</p>
+        <p class="font-mono">© {year} · <a href={`mailto:${profile.email}`}>{profile.email}</a></p>
+      </div>
+    </footer>
 
     <script>
       const observer = new IntersectionObserver(
@@ -92,3 +101,10 @@ const ogImageURL = new URL('/og-image.png', Astro.site).href;
     </script>
   </body>
 </html>
+
+<style>
+  .site-footer { background: var(--surface-container-lowest); border-top: 2px solid var(--outline-variant); padding: var(--space-6) 0; }
+  .site-footer__inner { display: flex; justify-content: space-between; gap: var(--space-4); color: var(--on-surface-variant); font-size: 13px; }
+  .site-footer a { color: var(--primary-container); text-underline-offset: 3px; }
+  @media (max-width: 600px) { .site-footer__inner { flex-direction: column; } }
+</style>
