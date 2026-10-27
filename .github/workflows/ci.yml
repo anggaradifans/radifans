@@ -21,13 +21,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          # Astro 7 requires >=22.12.0
-          node-version: "22"
+          # Astro 7 requires >=22.12.0. We run 24 LTS; check-latest takes the newest
+          # 24.x patch (security releases), not the runner's cached one.
+          node-version: "24"
+          check-latest: true
           cache: npm
 
       - name: Install dependencies
