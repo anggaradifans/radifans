@@ -1,9 +1,9 @@
 # Dev and build environment for the Astro site.
 #
 # This exists so the project can be built and served without installing a
-# matching Node on the host: Astro 7 requires Node >= 22.12.0.
+# matching Node on the host: Astro 7 requires Node >= 22.12.0; we run 24 LTS.
 # Production is deployed by Vercel, not from this image.
-FROM node:22-bookworm-slim
+FROM node:24.22.1-bookworm-slim
 
 WORKDIR /app
 
